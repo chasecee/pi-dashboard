@@ -10,7 +10,7 @@ export default function Clock() {
   }, []);
 
   return (
-    <div className="w-full text-center text-[11vw] ">
+    <div className="w-full text-center text-[12vw]">
       {time.toLocaleTimeString("en-US", {
         hour: "numeric",
         minute: "numeric",
