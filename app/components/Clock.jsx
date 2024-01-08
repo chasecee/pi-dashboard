@@ -27,7 +27,7 @@ export default function Clock() {
   }, []);
 
   return (
-    <div className="w-full text-center text-[14vw] text-red-900">
+    <div className="w-full text-center text-[14vw] text-red-800">
       {time || "00:00:00 PM"}
     </div>
   );
