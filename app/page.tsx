@@ -6,7 +6,7 @@ export default function Home() {
       <div className="rounded-xl ring-[2px] text-red-700 ring-current ring-opacity-50 px-10  ">
         <Clock />
       </div>
-      <div className="rounded-xl ring-[2px] text-red-700 ring-current ring-opacity-50 px-5 py-2 text-[4vw] uppercase  ">
+      <div className="rounded-xl ring-[2px] text-yellow-700 ring-current ring-opacity-50 px-5 py-2 text-[4vw] uppercase  ">
         <Date />
       </div>
       <div className="grid grid-cols-3 gap-10 w-full">
