@@ -2,7 +2,7 @@ import Clock from "./components/Clock";
 import Date from "./components/Date";
 export default function Home() {
   return (
-    <main className="flex gap-10 min-h-screen flex-col items-stretch justify-center p-5 mx-auto ">
+    <main className="flex flex-nowrap gap-10 min-h-screen flex-col items-stretch justify-center p-5 mx-auto ">
       <div className="rounded-xl ring-[2px] text-red-700 ring-current ring-opacity-50 px-10  ">
         <Clock />
       </div>
