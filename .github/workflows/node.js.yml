@@ -12,3 +12,5 @@ jobs:
           node-version: "18"
       - run: npm ci
       - run: npm run build
+      - name: Restart PM2 process
+        run: pm2 restart nextjs-app2
