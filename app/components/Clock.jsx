@@ -16,7 +16,7 @@ export default function Clock() {
     minutes = minutes < 10 ? "0" + minutes : minutes;
     seconds = seconds < 10 ? "0" + seconds : seconds;
 
-    return `${hours}:${minutes}:${seconds} ${ampm}`;
+    return `${hours}:${minutes} ${ampm}`;
   };
 
   useEffect(() => {
@@ -27,8 +27,6 @@ export default function Clock() {
   }, []);
 
   return (
-    <div className="w-full text-center text-[14vw] ">
-      {time || "00:00:00 PM"}
-    </div>
+    <div className="w-full text-center text-[20vw]">{time || "00:00 PM"}</div>
   );
 }
