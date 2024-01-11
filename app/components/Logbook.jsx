@@ -47,7 +47,7 @@ const HomeAssistantLogbook = () => {
               className="logbook-entry"
             >
               <div className="logbook-entry-header flex flex-row justify-between flex-nowrap">
-                <span className="logbook-entry-name max-w-1/2 overflow-hidden block">
+                <span className="logbook-entry-name max-w-[70%] overflow-hidden h-[24px] block">
                   {entry.name}
                 </span>
                 <span className="logbook-entry-time">
