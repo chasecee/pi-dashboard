@@ -12,5 +12,9 @@ jobs:
           node-version: "18"
       - run: npm ci
       - run: npm run build
-      - name: Restart PM2 process
-        run: pm2 restart nextjs-app2
+      - name: Stop and Delete existing PM2 process
+        run: pm2 delete nextjs-app || true
+      - name: Start PM2 process
+        run: pm2 start npm --name "nextjs-app" -- run start
+      - name: Save PM2 process list
+        run: pm2 save
