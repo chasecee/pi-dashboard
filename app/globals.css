@@ -10,8 +10,5 @@
 
 body {
   color: rgb(var(--foreground-rgb));
-  background-image: url('/img/bg.png');
-}
-.main>div{
-  @apply bg-black/70 backdrop-blur-lg shadow-2xl shadow-slate-900;
+  @apply bg-black;
 }

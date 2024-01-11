@@ -23,6 +23,12 @@ export default function Home() {
         <div className=" rounded-xl ring-[6px] text-purple-800 ring-current ring-opacity-50 px-10 overflow-hidden aspect-square  ">
           <h2>Backups:</h2>
         </div>
+        <div className=" rounded-xl ring-[6px] text-green-700 ring-current ring-opacity-50 px-10 overflow-hidden aspect-square  ">
+          <h2>Data:</h2>
+        </div>
+        <div className=" rounded-xl ring-[6px] text-purple-800 ring-current ring-opacity-50 px-10 overflow-hidden aspect-square  ">
+          <h2>Backups:</h2>
+        </div>
       </div>
     </main>
   );
