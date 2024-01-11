@@ -20,7 +20,7 @@ const HomeAssistantLogbook = () => {
           // Sort and slice the data to keep only the 5 most recent entries
           const recentEntries = data
             .sort((a, b) => new Date(b.when) - new Date(a.when))
-            .slice(0, 15); // Keep only the top 5 entries
+            .slice(0, 17); // Keep only the top 5 entries
           return recentEntries;
         });
         // Update the lastUpdateTime to the timestamp of the latest entry
