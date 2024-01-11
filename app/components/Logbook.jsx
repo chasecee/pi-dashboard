@@ -33,7 +33,7 @@ const HomeAssistantLogbook = () => {
     };
 
     // Set up the interval for fetching new data
-    const interval = setInterval(fetchLogbook, 2000); // Fetch every 2 seconds
+    const interval = setInterval(fetchLogbook, 2500); // Fetch every 2 seconds
     return () => clearInterval(interval);
   }, [lastUpdateTime]);
 
@@ -54,7 +54,9 @@ const HomeAssistantLogbook = () => {
                   {new Date(entry.when).toLocaleTimeString()}
                 </span>
               </div>
-              <div className="logbook-entry-message">{entry.message}</div>
+              <div className="logbook-entry-message text-current text-opacity-50">
+                {entry.message}
+              </div>
             </li>
           ))}
         </ul>
