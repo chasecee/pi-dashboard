@@ -10,6 +10,14 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: "18"
+
+      # New Step to Create .env.local File
+      - name: Create .env.local file
+        run: |
+          echo "HOME_ASSISTANT_API_URL=${{ secrets.HOME_ASSISTANT_API_URL }}" >> .env.local
+          echo "HOME_ASSISTANT_API_TOKEN=${{ secrets.HOME_ASSISTANT_API_TOKEN }}" >> .env.local
+          # Add more variables as needed
+
       - run: npm ci
       - run: npm run build
       - name: Stop and Delete existing PM2 process
