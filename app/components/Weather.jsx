@@ -31,21 +31,22 @@ const Weather = () => {
 
   if (!weatherData) return <div>Loading...</div>;
   return (
-    <div className="flex flex-row justify-between gap-0 divide-blue-900 divide-x-[6px]">
-      <div className="pr-2 py-0 pl-10 text-center whitespace-nowrap min-w-[40% tracking-wider]">
+    <div className="flex flex-row justify-between gap-0 ">
+      <div className="pr-2 py-0 pl-10 text-center whitespace-nowrap flex-grow">
         <span className="opacity-0 hidden">°</span>
         {weatherData.current?.temp.toFixed(1)}°
       </div>
+      <div className="h-[100cq] w-[6px] opacity-50 bg-current"></div>
       <div className="tracking-normal flex flex-row flex-grow items-center justify-center gap-6 px-6 overflow-hidden whitespace-nowrap">
         <div className="icon flex-shrink-0 opacity-70 relative rounded-[20px] overflow-hidden">
-          <div className="absolute inset-0 bg-blue-900 mix-blend-hue z-20"></div>
+          <div className="absolute inset-0 bg-current mix-blend-hue z-20"></div>
           {weatherData.current?.weather && weatherData.current.weather[0] && (
             <Image
               src={`https://openweathermap.org/img/wn/${weatherData.current.weather[0].icon}@2x.png`}
               alt="Weather icon"
               width={100}
               height={100}
-              className="relative z-10"
+              className="relative z-10 weather-icon"
             />
           )}
           <div className="absolute inset-0 z-0  bg-black mix-blend-multiply"></div>
