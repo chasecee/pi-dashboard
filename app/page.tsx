@@ -11,7 +11,7 @@ export default function Home() {
       <div className="rounded-xl ring-[6px] text-orange-700 ring-current ring-opacity-50 px-5 py-0 text-[7vw] uppercase font-normal tracking-[1rem] flex-grow-[1] items-center justify-center flex">
         <Date />
       </div>
-      <div className="rounded-xl ring-[6px] text-blue-700 ring-current ring-opacity-50 text-[7vw] uppercase font-normal tracking-[1rem] flex-shrink-0">
+      <div className="rounded-xl ring-[6px] text-blue-900 ring-current ring-opacity-50 text-[7vw] uppercase font-normal tracking-[1rem] flex-shrink-0">
         <Weather />
       </div>
       <div className="flex flex-row gap-[18px]">
