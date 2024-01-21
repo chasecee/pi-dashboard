@@ -28,7 +28,8 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     "app/components/Clock.jsx",
-    "app/components/middleware.jsx"
+    "app/components/middleware.jsx",
+    "app/api/weather/route.js"
   ],
   "exclude": ["node_modules"]
 }
