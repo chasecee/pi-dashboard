@@ -13,5 +13,8 @@ body {
   @apply bg-black;
 }
 .weather-icon {
-  filter: drop-shadow(2px 1px 0 rgb(209 209 209 / 79%));
+  filter: drop-shadow(1px 0 0 rgb(209, 209, 209))  /* Right shadow */
+          drop-shadow(0 1px 0 rgb(209, 209, 209))  /* Bottom shadow */
+          drop-shadow(-1px 0 0 rgb(209, 209, 209)) /* Left shadow */
+          drop-shadow(0 -1px 0 rgb(209, 209, 209)); /* Top shadow */
 }
