@@ -1,8 +1,15 @@
 //app/api/randomFact/route.js
+export const runtime = "edge";
 export async function GET() {
   try {
+    const timestamp = Date.now();
     const response = await fetch(
-      `https://api.adviceslip.com/advice?_=${Date.now()}`
+      `https://api.adviceslip.com/advice?timestamp=${timestamp}`,
+      {
+        headers: {
+          "Cache-Control": "no-store",
+        },
+      }
     );
 
     if (!response.ok) {
@@ -14,8 +21,7 @@ export async function GET() {
       status: 200,
       headers: {
         "Content-Type": "application/json",
-        // // Set cache-control headers to no-store to prevent caching
-        // "Cache-Control": "no-store, max-age=0",
+        "Cache-Control": "no-store, max-age=0",
       },
     });
   } catch (error) {
@@ -24,8 +30,7 @@ export async function GET() {
       status: 500,
       headers: {
         "Content-Type": "application/json",
-        // // Set cache-control headers to no-store to prevent caching
-        // "Cache-Control": "no-store, max-age=0",
+        "Cache-Control": "no-store, max-age=0",
       },
     });
   }

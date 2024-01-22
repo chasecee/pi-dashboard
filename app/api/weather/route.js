@@ -1,3 +1,4 @@
+export const runtime = "edge";
 export async function GET() {
   try {
     const lat = process.env.LAT;
@@ -5,7 +6,8 @@ export async function GET() {
     const apiKey = process.env.OPENWEATHER_API_KEY;
 
     const response = await fetch(
-      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=hourly,daily,minutely&units=imperial&appid=${apiKey}`
+      `https://api.openweathermap.org/data/3.0/onecall?lat=${lat}&lon=${lon}&exclude=hourly,daily,minutely&units=imperial&appid=${apiKey}`,
+      { cache: "no-store" }
     );
 
     if (!response.ok) {
@@ -18,6 +20,7 @@ export async function GET() {
       status: 200,
       headers: {
         "Content-Type": "application/json",
+        "Cache-Control": "no-store, max-age=0",
       },
     });
   } catch (error) {
@@ -28,6 +31,7 @@ export async function GET() {
         status: 500,
         headers: {
           "Content-Type": "application/json",
+          "Cache-Control": "no-store, max-age=0",
         },
       }
     );
