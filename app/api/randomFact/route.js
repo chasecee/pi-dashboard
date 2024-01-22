@@ -1,5 +1,6 @@
 //app/api/randomFact/route.js
 export const runtime = "edge";
+export const dynamic = "force-dynamic";
 // export const dynamic = "force-static";
 export async function GET() {
   try {
