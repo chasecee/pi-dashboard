@@ -1,5 +1,6 @@
 //app/api/randomFact/route.js
 export const runtime = "edge";
+// export const dynamic = "force-static";
 export async function GET() {
   try {
     const timestamp = Date.now();
@@ -13,7 +14,7 @@ export async function GET() {
     );
 
     if (!response.ok) {
-      throw new Error("Network response was not okk");
+      throw new Error("Network response was not ok");
     }
 
     const data = await response.json();
