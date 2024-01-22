@@ -14,8 +14,8 @@ export async function GET() {
       status: 200,
       headers: {
         "Content-Type": "application/json",
-        // Set cache-control headers to no-store to prevent caching
-        "Cache-Control": "no-store, max-age=0",
+        // // Set cache-control headers to no-store to prevent caching
+        // "Cache-Control": "no-store, max-age=0",
       },
     });
   } catch (error) {
@@ -24,8 +24,8 @@ export async function GET() {
       status: 500,
       headers: {
         "Content-Type": "application/json",
-        // Set cache-control headers to no-store to prevent caching
-        "Cache-Control": "no-store, max-age=0",
+        // // Set cache-control headers to no-store to prevent caching
+        // "Cache-Control": "no-store, max-age=0",
       },
     });
   }
