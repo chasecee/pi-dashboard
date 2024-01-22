@@ -13,7 +13,7 @@ export async function GET() {
     );
 
     if (!response.ok) {
-      throw new Error("Network response was not ok");
+      throw new Error("Network response was not okk");
     }
 
     const data = await response.json();
