@@ -6,6 +6,7 @@
   --foreground-rgb: 255, 255, 255;
   --background-start-rgb: 0, 0, 0;
   --background-end-rgb: 0, 0, 0;
+  --shadow-color: 255, 165, 0;
 }
 
 body {
@@ -13,8 +14,8 @@ body {
   @apply bg-black;
 }
 .weather-icon {
-  filter: drop-shadow(1px 0 0 rgb(209, 209, 209))  /* Right shadow */
-          drop-shadow(0 1px 0 rgb(209, 209, 209))  /* Bottom shadow */
-          drop-shadow(-1px 0 0 rgb(209, 209, 209)) /* Left shadow */
-          drop-shadow(0 -1px 0 rgb(209, 209, 209)); /* Top shadow */
+  filter: drop-shadow(1px 0 0 rgb(var(--shadow-color)))  /* Right shadow */
+          drop-shadow(0 1px 0 rgb(var(--shadow-color)))  /* Bottom shadow */
+          drop-shadow(-1px 0 0 rgb(var(--shadow-color))) /* Left shadow */
+          drop-shadow(0 -1px 0 rgb(var(--shadow-color))); /* Top shadow */
 }
