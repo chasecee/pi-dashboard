@@ -3,7 +3,7 @@ import { Anonymous_Pro } from "next/font/google";
 import "./globals.css";
 
 const inter = Anonymous_Pro({
-  style: "normal",
+  style: ["normal", "italic"],
   weight: "700",
   subsets: ["latin"],
 });
