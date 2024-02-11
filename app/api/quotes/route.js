@@ -1,18 +1,15 @@
-//app/api/randomFact/route.js
+// Ensure the path and filename are correct for your app's structure
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
-// export const dynamic = "force-static";
+
 export async function GET() {
   try {
-    const timestamp = Date.now();
-    const response = await fetch(
-      `https://api.quotable.io/quotes/random?timestamp=${timestamp}`,
-      {
-        headers: {
-          "Cache-Control": "no-store",
-        },
-      }
-    );
+    // Use HTTPS for the external API call
+    const response = await fetch("http://api.quotable.io/random", {
+      headers: {
+        "Cache-Control": "no-store",
+      },
+    });
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -27,8 +24,8 @@ export async function GET() {
       },
     });
   } catch (error) {
-    console.error("Error fetching fact:", error);
-    return new Response(JSON.stringify({ message: "Error fetching fact" }), {
+    console.error("Error fetching quote:", error);
+    return new Response(JSON.stringify({ message: "Error fetching quote" }), {
       status: 500,
       headers: {
         "Content-Type": "application/json",

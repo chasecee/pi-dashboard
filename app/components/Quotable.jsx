@@ -6,9 +6,10 @@ export default function Quotable() {
 
   async function fetchQuote() {
     try {
-      const response = await fetch("https://api.quotable.io/random");
-      const { statusCode, statusMessage, ...data } = await response.json();
-      if (!response.ok) throw new Error(`${statusCode} ${statusMessage}`);
+      // Fetch from your app's API route
+      const response = await fetch("/api/quotes/");
+      const data = await response.json();
+      if (!response.ok) throw new Error(data.message);
       setData(data);
     } catch (error) {
       console.error(error);
@@ -27,7 +28,7 @@ export default function Quotable() {
 
   return (
     <div>
-      <p>
+      <p className="text-pretty">
         {data.content}
         {data.author && (
           <span>
