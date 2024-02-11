@@ -6,7 +6,7 @@ export default function Quotable() {
 
   async function fetchQuote() {
     try {
-      const response = await fetch("https://api.quotable.io/random");
+      const response = await fetch("http://api.quotable.io/random");
       const { statusCode, statusMessage, ...data } = await response.json();
       if (!response.ok) throw new Error(`${statusCode} ${statusMessage}`);
       setData(data);
@@ -31,7 +31,10 @@ export default function Quotable() {
         {data.content}
         {data.author && (
           <span>
-            <cite className="opacity-70 ml-5" title="Source Title">
+            <cite
+              className="opacity-70 ml-5 whitespace-nowrap"
+              title="Source Title"
+            >
               - {data.author}
             </cite>
           </span>
