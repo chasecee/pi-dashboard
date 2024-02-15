@@ -10,6 +10,6 @@ jobs:
     steps:
       - name: SSH into Raspberry Pi and Refresh Chromium
         run: |
-          ssh pi@192.168.4.247 'pkill chromium; chromium-browser --kiosk --noerrdialogs --no-restore --disable-translate --disable-infobars --disable-features=TranslateUI --incognito --disable-gpu --disable-screensaver --autoplay-policy=no-user-gesture-required --overscroll-history-navigation=0 --no-first-run --no-default-browser-check "https://pi-dashboard-one.vercel.app/"'
+          ssh pi@192.168.4.247 '/home/pi/scripts/refresh_chromium.sh'
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
