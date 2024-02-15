@@ -7,7 +7,7 @@ import Quotable from "./components/Quotable";
 export default function Home() {
   return (
     <main className="flex flex-nowrap gap-[18px] min-h-screen max-h-screen overflow-hidden flex-col items-stretch justify-center p-[6px] main text-center ">
-      <div className="rounded-xl ring-[6px] text-yellow-700 ring-current ring-opacity-50 px-5 py-0  flex justify-center items-center flex-col flex-grow-[2] ">
+      <div className="rounded-xl ring-[6px] text-blue-700 ring-current ring-opacity-50 px-5 py-0  flex justify-center items-center flex-col flex-grow-[2] ">
         <Clock />
       </div>
       <div className="rounded-xl ring-[6px] text-orange-700 ring-current ring-opacity-50 px-5 py-0 text-[7vw] uppercase font-normal tracking-[1rem] flex-grow-[1] items-center justify-center flex">
