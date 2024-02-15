@@ -29,7 +29,8 @@
     ".next/types/**/*.ts",
     "app/components/Clock.jsx",
     "app/components/middleware.jsx",
-    "app/api/weather/route.js"
+    "app/api/weather/route.js",
+    "app/api/image/route.js"
   ],
   "exclude": ["node_modules"]
 }

@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
-
+import DalleImage from "@/app/components/DalleImage";
 const Weather = () => {
   const [weatherData, setWeatherData] = useState(null);
   const [weatherSummary, setWeatherSummary] = useState("");
@@ -105,6 +105,7 @@ const Weather = () => {
           <div className="weather-summary text-[2vw] tracking-normal break-words whitespace-normal">
             {weatherSummary || "Loading summary..."}
           </div>
+          <DalleImage prompt={weatherSummary} />
         </div>
       </div>
     </>
