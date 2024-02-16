@@ -20,7 +20,8 @@ jobs:
       - name: Deploy to Vercel
         id: vercel_deploy
         run: |
-          DEPLOYMENT_URL=$(vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_ORG_ID }} pi-dashboard | grep https | tail -1)
+          cd $GITHUB_WORKSPACE
+          DEPLOYMENT_URL=$(vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_ORG_ID }} | grep https | tail -1)
           echo "VERCEL_DEPLOYMENT_URL=$DEPLOYMENT_URL" >> $GITHUB_ENV
 
       - name: Wait for Vercel Deployment to be Ready
