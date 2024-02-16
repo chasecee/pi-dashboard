@@ -19,7 +19,9 @@ jobs:
 
       - name: Deploy to Vercel
         id: vercel_deploy
-        run: echo "VERCEL_DEPLOYMENT_URL=$(vercel --prod --token ${{ secrets.VERCEL_TOKEN }} | tail -1)" >> $GITHUB_ENV
+        run: |
+          DEPLOYMENT_URL=$(vercel --prod --token ${{ secrets.VERCEL_TOKEN }} -p [your-project-name] -o [your-org-name] | grep https | tail -1)
+          echo "VERCEL_DEPLOYMENT_URL=$DEPLOYMENT_URL" >> $GITHUB_ENV
         env:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
