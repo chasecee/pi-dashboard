@@ -1,6 +1,7 @@
 // File: app/api/image/route.ts
-
-export async function POST() {
+export const runtime = "edge";
+export const dynamic = "force-dynamic";
+export async function POST(req, res) {
   const { prompt } = req.body;
 
   try {

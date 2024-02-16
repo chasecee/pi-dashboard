@@ -67,8 +67,7 @@ const Weather = () => {
     // Call it once immediately
     fetchWeatherData();
 
-    // Then set it to be called every minute
-    const intervalId = setInterval(fetchWeatherData, 120000);
+    const intervalId = setInterval(fetchWeatherData, 300000);
 
     // Clear interval on component unmount
     return () => clearInterval(intervalId);
