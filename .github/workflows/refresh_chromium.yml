@@ -1,45 +1,17 @@
-name: Deploy to Vercel and Refresh Chromium on Raspberry Pi
+name: Refresh Chromium on Raspberry Pi
 
 on:
   push:
   workflow_dispatch:
 
 jobs:
-  deploy-to-vercel:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Install Vercel CLI
-        run: npm i -g vercel
-
-      - name: Install jq
-        run: sudo apt-get install jq
-
-      - name: Deploy to Vercel
-        id: vercel_deploy
-        run: |
-          cd $GITHUB_WORKSPACE
-          DEPLOYMENT_URL=$(vercel --prod --token ${{ secrets.VERCEL_TOKEN }} --scope ${{ secrets.VERCEL_ORG_ID }} | grep https | tail -1)
-          echo "VERCEL_DEPLOYMENT_URL=$DEPLOYMENT_URL" >> $GITHUB_ENV
-
-      - name: Wait for Vercel Deployment to be Ready
-        run: |
-          while : ; do
-            STATUS=$(curl -s "https://api.vercel.com/v1/now/deployments/${{ env.VERCEL_DEPLOYMENT_URL }}" -H "Authorization: Bearer ${{ secrets.VERCEL_TOKEN }}" | jq -r '.state')
-            if [ "$STATUS" = "READY" ]; then
-              break
-            fi
-            echo "Deployment status is $STATUS. Waiting for 30 seconds..."
-            sleep 30
-          done
-
   refresh-chromium:
-    needs: deploy-to-vercel
     runs-on: self-hosted
     steps:
+      - name: Wait for 2 minutes
+        run: sleep 120 # Sleep for 2 minutes (120 seconds)
       - name: SSH into Raspberry Pi and Refresh Chromium
-        run: ssh pi@192.168.4.247 '/home/pi/scripts/refresh_chromium.sh'
+        run: |
+          ssh pi@192.168.4.247 '/home/pi/scripts/refresh_chromium.sh'
         env:
           SSH_KEY: ${{ secrets.SSH_KEY }}
