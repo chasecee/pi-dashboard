@@ -33,7 +33,7 @@ const ConnectionStatus = () => {
       }`}
     >
       <div className="h-4 w-4 rounded-full bg-current"></div>
-      <span className="">{isOnline ? "Connected" : "No Connection"}</span>
+      <span className="">{isOnline ? "Online" : "Offline"}</span>
     </div>
   );
 };
