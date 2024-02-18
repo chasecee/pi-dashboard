@@ -104,7 +104,7 @@ const Weather = () => {
           <div className="weather-summary text-[2vw] tracking-normal break-words whitespace-normal">
             {weatherSummary || "Loading summary..."}
           </div>
-          <DalleImage prompt={weatherSummary} />
+          {/* <DalleImage prompt={weatherSummary} /> */}
         </div>
       </div>
     </>
