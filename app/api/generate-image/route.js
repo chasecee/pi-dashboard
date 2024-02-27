@@ -12,11 +12,10 @@ export async function POST(req) {
     const { prompt } = req.body || {};
     const defaultPrompt = "a default image description"; // Default prompt
     const response = await openai.images.generate({
-      model: "dall-e-3",
+      model: "dall-e-2",
       prompt: prompt || defaultPrompt,
       n: 1,
-      size: "1792x1024",
-      style: "natural",
+      size: "512x512",
     });
 
     return new Response(JSON.stringify(response.data), {
