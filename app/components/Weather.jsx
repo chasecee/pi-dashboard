@@ -16,7 +16,7 @@ const Weather = () => {
     fetchWeatherData(setWeatherData);
     const intervalId = setInterval(
       () => fetchWeatherData(setWeatherData),
-      300000
+      30000000
     );
     return () => clearInterval(intervalId);
   }, []);
