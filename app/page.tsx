@@ -14,7 +14,7 @@ export default function Home() {
         <Date />
       </div>
       <div className="rounded-xl ring-[6px] text-amber-600 ring-current ring-opacity-50 text-[7vw] uppercase font-normal tracking-[1rem] flex-shrink-0">
-        <Weather />
+        {/* <Weather /> */}
       </div>
       <div className="flex flex-row gap-[18px]">
         <ConnectionStatus />
