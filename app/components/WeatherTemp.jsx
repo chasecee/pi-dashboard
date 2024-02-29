@@ -36,7 +36,7 @@ const Weather = () => {
 
   return (
     <>
-      <div className="relative">
+      <div className="relative ">
         <div className="px-10 text-center whitespace-nowrap  top-0 left-2 text-[3vw] tracking-[.5vw]  z-10">
           <span className="opacity-0 ">°</span>
           {weatherData.current?.temp.toFixed(0)}°
