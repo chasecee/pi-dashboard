@@ -12,7 +12,7 @@ export default function HomePage() {
             <Clock />
           </div>
           <div
-            className="color-DarkMuted font-light transform-cpu translate-y-3 translate-x-3 "
+            className="color-DarkMuted  font-light transform-cpu translate-y-3 translate-x-3 "
             style={{ textShadow: "-1rem -1rem 2rem rgba(0,0,0,.5)" }}
           >
             <Clock />
