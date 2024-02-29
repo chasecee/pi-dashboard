@@ -1,9 +1,7 @@
 //app/api/list-blobs/route.js
 import { list } from "@vercel/blob";
 
-export const config = {
-  runtime: "edge", // Use the Edge runtime for improved performance
-};
+export const runtime = "edge";
 
 export async function GET() {
   try {
