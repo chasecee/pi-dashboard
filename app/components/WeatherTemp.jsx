@@ -5,7 +5,7 @@ import Image from "next/image";
 import DalleImage from "@/app/components/DalleImage";
 import fetchWeatherData from "../utils/fetchWeatherData";
 import fetchWeatherSummary from "../utils/fetchWeatherSummary";
-import generateWeatherImage from "../utils/generateWeatherImage";
+// import generateWeatherImage from "../utils/generateWeatherImage";
 
 const Weather = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -28,9 +28,9 @@ const Weather = () => {
   }, [weatherData]);
 
   useEffect(() => {
-    if (weatherSummary) {
-      generateWeatherImage(weatherSummary, setImageData);
-    }
+    // if (weatherSummary) {
+    //   generateWeatherImage(weatherSummary, setImageData);
+    // }
   }, [weatherSummary]);
   if (!weatherData) return <div>Loading...</div>;
 

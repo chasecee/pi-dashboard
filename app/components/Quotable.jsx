@@ -8,12 +8,13 @@ export default function Quotable() {
     try {
       // Fetch from your app's API route
       const response = await fetch("/api/quotes/");
-      const data = await response.json();
-      if (!response.ok) throw new Error(data.message);
-      setData(data);
+      const [quote] = await response.json(); // Destructure the first element from the array
+      console.log(quote);
+      if (!response.ok) throw new Error(quote.message);
+      setData(quote);
     } catch (error) {
       console.error(error);
-      setData({ content: "Oops... Something went wrong" });
+      setData({ q: "Oops... Something went wrong" });
     }
   }
 
@@ -29,14 +30,14 @@ export default function Quotable() {
   return (
     <div>
       <p className="text-pretty">
-        {data.content}
-        {data.author && (
+        {data.q}
+        {data.a && (
           <span>
             <cite
               className="opacity-70 ml-5 whitespace-nowrap"
               title="Source Title"
             >
-              - {data.author}
+              - {data.a}
             </cite>
           </span>
         )}

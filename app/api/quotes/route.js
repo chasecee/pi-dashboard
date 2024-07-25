@@ -5,7 +5,7 @@ export const dynamic = "force-dynamic";
 export async function GET() {
   try {
     // Use HTTPS for the external API call
-    const response = await fetch("http://api.quotable.io/random", {
+    const response = await fetch("https://zenquotes.io/api/random", {
       headers: {
         "Cache-Control": "no-store",
       },
