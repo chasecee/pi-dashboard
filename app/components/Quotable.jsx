@@ -29,15 +29,15 @@ export default function Quotable() {
 
   return (
     <div>
-      <p className="text-pretty">
+      <p className="text-balance">
         {data.q}
         {data.a && (
           <span>
             <cite
-              className="opacity-70 ml-5 whitespace-nowrap"
+              className="opacity-70 ml-5 mt-5 font-normal block whitespace-nowrap"
               title="Source Title"
             >
-              - {data.a}
+              {data.a}
             </cite>
           </span>
         )}
