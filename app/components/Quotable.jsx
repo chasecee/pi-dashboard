@@ -29,16 +29,16 @@ export default function Quotable() {
 
   return (
     <div>
-      <p className="text-balance">
+      <p className="text-balance mx-[5vw]">
         {data.q}
         {data.a && (
           <span>
-            <cite
-              className="opacity-70 ml-5 mt-5 font-normal block whitespace-nowrap"
+            <span
+              className="opacity-70 ml-5 mt-5 tracking-[.2vw] font-normal uppercase text-[.5em] block whitespace-nowrap"
               title="Source Title"
             >
               {data.a}
-            </cite>
+            </span>
           </span>
         )}
       </p>

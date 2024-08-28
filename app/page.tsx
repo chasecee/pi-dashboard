@@ -11,7 +11,7 @@ export default function Home() {
         <Date />
       </div> */}
       <div className="rounded-xl relative ring-[6px] text-red-700 ring-current ring-opacity-50 px-5 py-0  flex justify-center items-center flex-col flex-grow-[2] ">
-        <div className="text-[7vw]">
+        <div className="text-[clamp(50px,7vw,120px)]">
           <Date />
         </div>
         <Clock />
