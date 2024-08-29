@@ -14,7 +14,22 @@ message = client.messages.create(
     messages=[
         {
             "role": "user",
-            "content": f"Here's a list of files in my project:\n\n{file_list}\n\nBased on this information, generate a basic README.md file for my project. Include sections such as Project Overview and File Structure. Keep it concise."
+            "content": f"""Here's a list of files in my project:
+
+{file_list}
+
+Based on this information, generate a clean, well-formatted README.md file for my project. Use proper Markdown syntax for headings, lists, and code blocks. Include the following sections:
+
+1. Project Title (use a top-level heading)
+2. Project Overview (brief description)
+3. Features (use a bullet list)
+4. File Structure (use a code block for the file tree)
+5. Installation (if applicable)
+6. Usage (if applicable)
+7. Contributing (brief guidelines)
+8. License (if known)
+
+Keep it concise and ensure proper Markdown formatting throughout."""
         }
     ]
 )
@@ -22,7 +37,14 @@ message = client.messages.create(
 # Extract the README content from the response
 readme_content = message.content[0].text
 
+# Clean up the content (remove any potential wrapper markdown code blocks)
+readme_content = readme_content.strip()
+if readme_content.startswith("```markdown"):
+    readme_content = readme_content[len("```markdown"):].strip()
+if readme_content.endswith("```"):
+    readme_content = readme_content[:-3].strip()
+
 with open('README.md', 'w') as readme_file:
     readme_file.write(readme_content)
 
-print("README.md has been generated successfully.")
+print("README.md has been generated successfully with improved formatting.")
