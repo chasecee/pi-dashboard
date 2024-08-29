@@ -23,7 +23,7 @@ include basic instructions on how to run the next js dev.
 mention its hosted on vercel at https://pi-dashboard-one.vercel.app/
 Based on this information, generate a clean, well-formatted README.md file for my project. Use proper Markdown syntax for headings, lists, and code blocks. Include the following sections:
 
-1. Project Title (use a top-level heading)
+1. Project Title in ASCII Art
 2. Project Overview (brief description)
 3. Features (use a bullet list)
 4. File Structure (use a code block for the file tree)
