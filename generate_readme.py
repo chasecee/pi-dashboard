@@ -1,5 +1,6 @@
 import os
 import glob
+import argparse
 from anthropic import Anthropic
 
 client = Anthropic(api_key=os.environ['ANTHROPIC_API_KEY'])
@@ -7,6 +8,11 @@ client = Anthropic(api_key=os.environ['ANTHROPIC_API_KEY'])
 # Get a list of files in the repository
 files = glob.glob('**/*', recursive=True)
 file_list = "\n".join(files)
+
+# Add command-line argument parsing
+parser = argparse.ArgumentParser(description="Generate README for Pi Dashboard project")
+parser.add_argument('--output', default='README.md', help='Output file name (default: README.md)')
+args = parser.parse_args()
 
 message = client.messages.create(
     model="claude-3-haiku-20240307",
@@ -23,7 +29,7 @@ include basic instructions on how to run the next js dev.
 mention its hosted on vercel at https://pi-dashboard-one.vercel.app/
 Based on this information, generate a clean, well-formatted README.md file for my project. Use proper Markdown syntax for headings, lists, and code blocks. Include the following sections:
 
-1. Project Title in ASCII Art (use a top-level heading)
+1. Project Title with fun decorations (top level heading)
 2. Project Overview (brief description)
 3. Features (use a bullet list)
 4. File Structure (use a code block for the file tree)
@@ -31,6 +37,8 @@ Based on this information, generate a clean, well-formatted README.md file for m
 6. Usage (if applicable)
 7. Contributing (brief guidelines)
 8. License (if known)
+
+Also, add a warning at the top of the README stating that it's automatically generated and may be overwritten.
 
 Keep it concise and ensure proper Markdown formatting throughout. """
         }
@@ -47,7 +55,7 @@ if readme_content.startswith("```markdown"):
 if readme_content.endswith("```"):
     readme_content = readme_content[:-3].strip()
 
-with open('README.md', 'w') as readme_file:
+with open(args.output, 'w') as readme_file:
     readme_file.write(readme_content)
 
-print("README.md has been generated successfully with improved formatting.")
+print(f"{args.output} has been generated successfully with improved formatting.")
