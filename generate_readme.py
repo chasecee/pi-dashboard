@@ -8,7 +8,7 @@ anthropic = Anthropic(api_key=os.environ['ANTHROPIC_API_KEY'])
 files = glob.glob('**/*', recursive=True)
 file_list = "\n".join(files)
 
-prompt = f"""
+prompt = f'''
 Human: Here's a list of files in my project:
 
 {file_list}
