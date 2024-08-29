@@ -29,7 +29,7 @@ Based on this information, generate a clean, well-formatted README.md file for m
 7. Contributing (brief guidelines)
 8. License (if known)
 
-Keep it concise and ensure proper Markdown formatting throughout."""
+Keep it concise and ensure proper Markdown formatting throughout. """
         }
     ]
 )
