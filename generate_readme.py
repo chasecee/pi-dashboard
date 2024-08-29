@@ -14,6 +14,8 @@ Human: Here's a list of files in my project:
 {file_list}
 
 Based on this information, generate a basic README.md file for my project. Include sections such as Project Overview and File Structure. Keep it concise.
+
+Assistant:
 '''
 
 response = anthropic.completions.create(
