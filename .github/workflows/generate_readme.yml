@@ -1,0 +1,67 @@
+name: Generate README with Claude
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  generate-readme:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install anthropic requests
+
+      - name: Scan codebase and generate README
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          python - <<EOF
+          import os
+          import glob
+          from anthropic import Anthropic, HUMAN_PROMPT, AI_PROMPT
+
+          def get_file_content(file_path):
+              with open(file_path, 'r') as file:
+                  return file.read()
+
+          def get_codebase_summary():
+              file_types = ['.py', '.js', '.ts', '.html', '.css', '.md']
+              codebase = ""
+              for file_type in file_types:
+                  for file_path in glob.glob(f'**/*{file_type}', recursive=True):
+                      codebase += f"\n\nFile: {file_path}\n"
+                      codebase += get_file_content(file_path)
+              return codebase
+
+          anthropic = Anthropic(api_key=os.environ['ANTHROPIC_API_KEY'])
+
+          codebase_summary = get_codebase_summary()
+          prompt = f"{HUMAN_PROMPT}Here's a summary of my codebase:\n\n{codebase_summary}\n\nBased on this information, generate a comprehensive README.md file for my project. Include sections such as Project Overview, Installation, Usage, Features, and any other relevant information you can infer from the codebase.{AI_PROMPT}"
+
+          response = anthropic.completions.create(
+              model="claude-3-opus-20240229",
+              max_tokens_to_sample=2000,
+              prompt=prompt
+          )
+
+          with open('README.md', 'w') as readme_file:
+              readme_file.write(response.completion)
+          EOF
+
+      - name: Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add README.md
+          git commit -m "Update README.md using Claude API" || echo "No changes to commit"
+          git push
