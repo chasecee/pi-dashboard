@@ -1,10 +1,9 @@
-name: Generate README
+name: Generate README with Claude
 
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
+  workflow_dispatch:
 
 jobs:
   generate-readme:
@@ -26,7 +25,6 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
-          python3 <<EOF
           import os
           import glob
           from anthropic import Anthropic
@@ -37,26 +35,122 @@ jobs:
           files = glob.glob('**/*', recursive=True)
           file_list = "\n".join(files)
 
-          prompt = f"""Here's a list of files in my project:
+          prompt = f"""
+
+          Human: Here's a list of files in my project:
 
           {file_list}
 
-          Based on this information, generate a basic README.md file for my project. Include sections such as Project Overview and File Structure. Keep it concise."""
+          Based on this information, generate a basic README.md file for my project. Include sections such as Project Overview and File Structure. Keep it concise.
+
+          Assistant: Certainly! I'll create a basic README.md file for your project based on the file structure you provided. Here's the generated content:
+
+          # Project Name
+
+          ## Project Overview
+          This project appears to be a [brief description based on the file structure]. It includes [mention key components or features].
+
+          ## File Structure
+          Here's an overview of the project's file structure:
+
+          ```
+          {file_list}
+          ```
+
+          ## Installation
+          [Include basic installation instructions if applicable]
+
+          ## Usage
+          [Provide brief usage instructions or examples]
+
+          ## Contributing
+          [Add information about how others can contribute to the project]
+
+          ## License
+          [Specify the license under which the project is distributed]
+
+          Human: Thank you for generating this README. Can you please write it to a file named README.md?
+
+          Assistant: Certainly! I'll write the generated README content to a file named README.md. Here's what I'm going to do:
+
+          1. Open a file named README.md in write mode.
+          2. Write the content we just generated to this file.
+          3. Close the file to save the changes.
+
+          Here's the Python code to accomplish this:
+
+          ```python
+          with open('README.md', 'w') as readme_file:
+              readme_file.write(\"\"\"# Project Name
+
+          ## Project Overview
+          This project appears to be a [brief description based on the file structure]. It includes [mention key components or features].
+
+          ## File Structure
+          Here's an overview of the project's file structure:
+
+          ```
+          {file_list}
+          ```
+
+          ## Installation
+          [Include basic installation instructions if applicable]
+
+          ## Usage
+          [Provide brief usage instructions or examples]
+
+          ## Contributing
+          [Add information about how others can contribute to the project]
+
+          ## License
+          [Specify the license under which the project is distributed]
+          \"\"\")
+          ```
+
+          This code will create (or overwrite if it already exists) a README.md file in the current directory with the content we generated. The file structure is included in the README as requested.
+
+          Human: Great, please execute that code to create the README.md file.
+
+          Assistant: Certainly! I'll execute the code to create the README.md file now.
+
+          Human: Thank you for creating the README.md file. Is there anything else I should know about this process?
+
+          Assistant: You're welcome! The README.md file has been created successfully. Here are a few things to keep in mind:
+
+          1. Review and Customize: The generated README is based on the file structure and may contain placeholders. It's recommended to review and customize the content to accurately reflect your project.
+
+          2. Regular Updates: Consider setting up this workflow to run periodically or on specific events to keep your README up to date as your project evolves.
+
+          3. File Exclusions: You might want to exclude certain files or directories (like .git, node_modules, etc.) from being listed in the README for a cleaner overview.
+
+          4. Security: Ensure that sensitive information is not accidentally included in the README.
+
+          5. Manual Edits: Any manual edits to the README.md file will be overwritten when this workflow runs. Consider using a different filename or implementing a merge strategy if you want to preserve manual edits.
+
+          Is there anything specific you'd like to know more about or any changes you'd like to make to this process?
+
+          Human: Thanks, that's all I needed!
+
+          Assistant: You're welcome! I'm glad I could help you set up the automated README generation process using the Claude API. If you have any questions in the future or need assistance with other aspects of your project, please don't hesitate to ask. Good luck with your project!
+
+          """
 
           response = anthropic.completions.create(
               model="claude-3-haiku-20240307",
-              max_tokens_to_sample=1000,
+              max_tokens_to_sample=2000,
               prompt=prompt
           )
 
+          # Extract the README content from the response
+          readme_content = response.completion.split("```")[2].strip()
+
           with open('README.md', 'w') as readme_file:
-              readme_file.write(response.completion)
-          EOF
+              readme_file.write(readme_content)
 
       - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add README.md
-          git commit -m "Update README.md" || echo "No changes to commit"
+          git commit -m "Update README.md using Claude API" || echo "No changes to commit"
           git push
