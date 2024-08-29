@@ -1,9 +1,10 @@
-name: Generate README with Claude
+name: Generate README
 
 on:
   push:
     branches: [main]
-  workflow_dispatch:
+  pull_request:
+    branches: [main]
 
 jobs:
   generate-readme:
@@ -25,9 +26,10 @@ jobs:
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
         run: |
+          python3 <<EOF
           import os
           import glob
-          from anthropic import Anthropic, HUMAN_PROMPT, AI_PROMPT
+          from anthropic import Anthropic
 
           anthropic = Anthropic(api_key=os.environ['ANTHROPIC_API_KEY'])
 
@@ -35,7 +37,11 @@ jobs:
           files = glob.glob('**/*', recursive=True)
           file_list = "\n".join(files)
 
-          prompt = f"{HUMAN_PROMPT}Here's a list of files in my project:\n\n{file_list}\n\nBased on this information, generate a basic README.md file for my project. Include sections such as Project Overview and File Structure. Keep it concise.{AI_PROMPT}"
+          prompt = f"""Here's a list of files in my project:
+
+          {file_list}
+
+          Based on this information, generate a basic README.md file for my project. Include sections such as Project Overview and File Structure. Keep it concise."""
 
           response = anthropic.completions.create(
               model="claude-3-haiku-20240307",
@@ -45,11 +51,12 @@ jobs:
 
           with open('README.md', 'w') as readme_file:
               readme_file.write(response.completion)
+          EOF
 
       - name: Commit changes
         run: |
           git config --local user.email "action@github.com"
           git config --local user.name "GitHub Action"
           git add README.md
-          git commit -m "Update README.md using Claude API" || echo "No changes to commit"
+          git commit -m "Update README.md" || echo "No changes to commit"
           git push
