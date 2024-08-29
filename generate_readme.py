@@ -18,6 +18,9 @@ message = client.messages.create(
 
 {file_list}
 
+Repo is called Pi Dashboard, git url is https://github.com/chasecee/pi-dashboard
+include basic instructions on how to run the next js dev.
+mention its hosted on vercel at https://pi-dashboard-one.vercel.app/
 Based on this information, generate a clean, well-formatted README.md file for my project. Use proper Markdown syntax for headings, lists, and code blocks. Include the following sections:
 
 1. Project Title (use a top-level heading)
