@@ -20,7 +20,12 @@ export default function Quotable() {
 
   useEffect(() => {
     fetchQuote(); // Fetch a quote when the component mounts
-    const intervalId = setInterval(fetchQuote, 3600000); // Set up an interval to fetch a quote every hour (3600000 milliseconds)
+    const hoursToMilliseconds = (hours) => hours * 3600000;
+    const intervalInHours = 0.5; // Change this value to set the desired interval in hours
+    const intervalId = setInterval(
+      fetchQuote,
+      hoursToMilliseconds(intervalInHours)
+    );
 
     return () => clearInterval(intervalId); // Clear the interval when the component unmounts
   }, []);
