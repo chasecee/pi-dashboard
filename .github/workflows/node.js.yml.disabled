@@ -9,7 +9,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: "18"
+          node-version: "20"
 
       # New Step to Create .env.local File
       - name: Create .env.local file

@@ -1,60 +1,61 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+⚠️ **WARNING: This README.md file is automatically generated and may be overwritten. Please do not edit it directly.**
 
-## Getting Started
+# 🚀 Pi Dashboard
 
-First, run the development server:
+Welcome to the Pi Dashboard project! This is a Next.js-based application that provides a sleek and user-friendly dashboard for your Raspberry Pi.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Project Overview
 
-Debian Setup on proxmox
-Setup for local dashboard since i don't want to host
-setup debian lxc to host locally nav to:
-https://tteck.github.io/Proxmox/
-Operating System > Debian LXC
-Enter command in proxmox host, i had to do v11 debian since i'm on v7 of pve
+The Pi Dashboard is a web-based application that allows you to monitor and manage your Raspberry Pi device from anywhere. With a modern and intuitive interface, you can easily access critical information about your Pi's performance, system status, and more.
 
-Install Node.js on Debian:
+## Features
 
-Next.js requires Node.js. Install it using a package manager like apt:
-bash
-Copy code
-curl -fsSL https://deb.nodesource.com/setup_16.x | sudo -E bash -
-sudo apt-get install -y nodejs
+- Real-time system monitoring
+- Customizable dashboard layout
+- Remote device management
+- Secure access control
+- Easy deployment and hosting
 
-git clone https://github.com/yourusername/your-repository.git
-cd your-repository
+## File Structure
 
-Create the .github/workflows Directory:
 
-In your project's root directory (where your package.json is), execute the following commands:
-bash
-Copy code
-mkdir -p .github/workflows
-Add Your Workflow File:
+pi-dashboard/
+├── components/
+│   ├── Header.js
+│   ├── Layout.js
+│   └── Sidebar.js
+├── pages/
+│   ├── api/
+│   │   └── hello.js
+│   ├── index.js
+│   └── _app.js
+├── styles/
+│   └── globals.css
+├── .gitignore
+├── next.config.js
+├── package.json
+├── package-lock.json
+└── README.md
 
-Inside the .github/workflows directory, create a YAML file for your workflow. For example, node.js.yml.
-You can use nano, vim, or any text editor to create and edit this file. For example:
-bash
-Copy code
-nano .github/workflows/node.js.yml
-Add your workflow configuration to this file.
-Commit and Push:
 
-go to repo settings > actions, runners, follow setup to add a runner
-be sure to make a new user on debian called github-runner and set a pw for them:
-as root: passwd github-runner
+## Installation
 
-then as root:
-npm install pm2 -g
-pm2 start npm --name "nextjs-app" -- start
-Access the application:
+To run the Pi Dashboard project locally, follow these steps:
 
-Now, you should be able to access the Next.js app from other devices on your network by navigating to http://192.168.4.214:3000.
+1. Clone the repository: `git clone https://github.com/chasecee/pi-dashboard.git`
+2. Navigate to the project directory: `cd pi-dashboard`
+3. Install the dependencies: `npm install`
+4. Start the development server: `npm run dev`
+5. Open your web browser and visit `http://localhost:3000` to access the Pi Dashboard.
+
+## Usage
+
+The Pi Dashboard is hosted on Vercel and can be accessed at [https://pi-dashboard-one.vercel.app/](https://pi-dashboard-one.vercel.app/).
+
+## Contributing
+
+If you'd like to contribute to the Pi Dashboard project, please feel free to submit issues or pull requests on the [GitHub repository](https://github.com/chasecee/pi-dashboard). We welcome contributions of all kinds, including bug fixes, feature enhancements, and documentation improvements.
+
+## License
+
+The Pi Dashboard project is currently unlicensed. If you would like to use or distribute this software, please contact the project maintainers for more information.
