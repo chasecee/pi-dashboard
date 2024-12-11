@@ -1,6 +1,7 @@
 // Ensure the path and filename are correct for your app's structure
 export const runtime = "edge";
 export const dynamic = "force-dynamic";
+export const revalidate = 0;
 
 export async function GET() {
   try {
@@ -20,7 +21,7 @@ export async function GET() {
       status: 200,
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "no-store, max-age=0",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
       },
     });
   } catch (error) {
@@ -29,7 +30,7 @@ export async function GET() {
       status: 500,
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "no-store, max-age=0",
+        "Cache-Control": "no-cache, no-store, must-revalidate",
       },
     });
   }

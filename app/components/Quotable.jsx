@@ -6,8 +6,10 @@ export default function Quotable() {
 
   async function fetchQuote() {
     try {
-      // Fetch from your app's API route
-      const response = await fetch("/api/quotes/");
+      // Add cache: 'no-store' and a timestamp to prevent caching
+      const response = await fetch(`/api/quotes?t=${Date.now()}`, {
+        cache: "no-store",
+      });
       const [quote] = await response.json(); // Destructure the first element from the array
       console.log(quote);
       if (!response.ok) throw new Error(quote.message);
