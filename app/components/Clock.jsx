@@ -23,7 +23,7 @@ export default function Clock() {
   }, []);
 
   return (
-    <div className="w-full text-center text-[clamp(200px,35vw,500px)] leading-[70%] tracking-tight">
+    <div className="w-full text-center text-[clamp(100px,35vw,500px)] leading-[70%] tracking-tight">
       {time || "00:00"}
     </div>
   );

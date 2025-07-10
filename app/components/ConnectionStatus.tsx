@@ -28,12 +28,12 @@ const ConnectionStatus = () => {
 
   return (
     <div
-      className={`flex rounded-[3px] ring-[0px] flex-row items-center text-[2vw] gap-4 px-4 pr-5 py-2 ring-current ring-opacity-50 uppercase font-normal flex-shrink-0 ${
+      className={`flex rounded-[3px] ring-[0px] flex-row items-center text-[clamp(14px,2vw,20px)] gap-4 px-4 pr-5 py-2 ring-current ring-opacity-50 uppercase font-normal flex-shrink-0 ${
         isOnline ? "text-green-700" : "text-red-700"
       }`}
     >
       <div className="h-3 w-3 rounded-full bg-current "></div>
-      <span className="opacity-70 text-[2vw]">
+      <span className="opacity-70 leading-[1] relative top-[1px]">
         {isOnline ? "Online" : "Offline"}
       </span>
     </div>
