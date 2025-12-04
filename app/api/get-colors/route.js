@@ -1,5 +1,5 @@
 // app/api/get-colors/route.js
-import Vibrant from "node-vibrant";
+import { Vibrant } from "node-vibrant/node";
 
 // This is your GET request handler.
 export async function GET(req) {
