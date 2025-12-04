@@ -1,38 +1,23 @@
-"use client";
-import React, { useState, useEffect } from "react";
+async function getQuote() {
+  try {
+    const response = await fetch("https://zenquotes.io/api/random", {
+      next: { revalidate: 1800 },
+    });
 
-export default function Quotable() {
-  const [data, setData] = useState(null);
-
-  async function fetchQuote() {
-    try {
-      // Add cache: 'no-store' and a timestamp to prevent caching
-      const response = await fetch(`/api/quotes?t=${Date.now()}`, {
-        cache: "no-store",
-      });
-      const [quote] = await response.json(); // Destructure the first element from the array
-      console.log(quote);
-      if (!response.ok) throw new Error(quote.message);
-      setData(quote);
-    } catch (error) {
-      console.error(error);
-      setData({ q: "Oops... Something went wrong" });
+    if (!response.ok) {
+      throw new Error("Failed to fetch quote");
     }
+
+    const [quote] = await response.json();
+    return quote;
+  } catch (error) {
+    console.error(error);
+    return { q: "Oops... Something went wrong" };
   }
+}
 
-  useEffect(() => {
-    fetchQuote(); // Fetch a quote when the component mounts
-    const hoursToMilliseconds = (hours) => hours * 3600000;
-    const intervalInHours = 0.5; // Change this value to set the desired interval in hours
-    const intervalId = setInterval(
-      fetchQuote,
-      hoursToMilliseconds(intervalInHours)
-    );
-
-    return () => clearInterval(intervalId); // Clear the interval when the component unmounts
-  }, []);
-
-  if (!data) return null; // Do not render until the first quote is loaded
+export default async function Quotable() {
+  const data = await getQuote();
 
   return (
     <div>

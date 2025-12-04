@@ -1,16 +1,9 @@
-//app/components/Weather.jsx
 "use client";
-import React, { useState, useEffect, useCallback } from "react";
-import Image from "next/image";
-import DalleImage from "@/app/components/DalleImage";
+import React, { useState, useEffect } from "react";
 import fetchWeatherData from "../utils/fetchWeatherData";
-import fetchWeatherSummary from "../utils/fetchWeatherSummary";
-// import generateWeatherImage from "../utils/generateWeatherImage";
 
 const Weather = () => {
   const [weatherData, setWeatherData] = useState(null);
-  const [weatherSummary, setWeatherSummary] = useState("");
-  const [imageData, setImageData] = useState(null);
 
   useEffect(() => {
     fetchWeatherData(setWeatherData);
@@ -21,17 +14,6 @@ const Weather = () => {
     return () => clearInterval(intervalId);
   }, []);
 
-  useEffect(() => {
-    if (weatherData) {
-      fetchWeatherSummary(weatherData, setWeatherSummary);
-    }
-  }, [weatherData]);
-
-  useEffect(() => {
-    // if (weatherSummary) {
-    //   generateWeatherImage(weatherSummary, setImageData);
-    // }
-  }, [weatherSummary]);
   if (!weatherData) return <div>Loading...</div>;
 
   return (

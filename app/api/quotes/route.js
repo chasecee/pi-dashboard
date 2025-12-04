@@ -1,15 +1,11 @@
-// Ensure the path and filename are correct for your app's structure
 export const runtime = "edge";
-export const dynamic = "force-dynamic";
-export const revalidate = 0;
+export const revalidate = 1800;
 
 export async function GET() {
   try {
     // Use HTTPS for the external API call
     const response = await fetch("https://zenquotes.io/api/random", {
-      headers: {
-        "Cache-Control": "no-store",
-      },
+      next: { revalidate: 1800 },
     });
 
     if (!response.ok) {
@@ -21,7 +17,7 @@ export async function GET() {
       status: 200,
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Cache-Control": "public, s-maxage=1800, stale-while-revalidate=3600",
       },
     });
   } catch (error) {
