@@ -20,5 +20,5 @@ export default function Clock() {
     return () => clearInterval(timerId);
   }, []);
 
-  return <div className="w-full">{dateString || "Loading date..."}</div>;
+  return <div className="w-full">{dateString || "_"}</div>;
 }
