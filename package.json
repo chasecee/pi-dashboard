@@ -10,11 +10,9 @@
     "startlocal": "next start -H 0.0.0.0 -p 3000"
   },
   "dependencies": {
-    "@vercel/blob": "^2.0.0",
     "geist": "^1.5.1",
     "next": "^16.0.7",
     "node-fetch": "^3.3.2",
-    "node-vibrant": "^4.0.3",
     "react": "^19.2.1",
     "react-dom": "^19.2.1",
     "sharp": "^0.34.5"
