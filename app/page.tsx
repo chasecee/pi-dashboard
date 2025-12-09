@@ -2,6 +2,7 @@ import Clock from "./components/Clock";
 import Date from "./components/Date";
 import ConnectionStatus from "./components/ConnectionStatus";
 import Quotable from "./components/Quotable";
+
 export default function Home() {
   return (
     <main className="flex flex-nowrap gap-[3vw] h-svh overflow-hidden flex-col items-stretch justify-center p-[2vw] main text-center ">

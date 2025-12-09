@@ -1,11 +1,11 @@
 export const runtime = "edge";
-export const revalidate = 1800;
+export const revalidate = 86400;
 
 export async function GET() {
   try {
     // Use HTTPS for the external API call
     const response = await fetch("https://zenquotes.io/api/random", {
-      next: { revalidate: 1800 },
+      next: { revalidate: 86400 },
     });
 
     if (!response.ok) {
@@ -17,7 +17,7 @@ export async function GET() {
       status: 200,
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "public, s-maxage=1800, stale-while-revalidate=3600",
+        "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=172800",
       },
     });
   } catch (error) {

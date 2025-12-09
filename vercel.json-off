@@ -1,8 +1,0 @@
-{
-  "crons": [
-    {
-      "path": "/api/store-and-display-image",
-      "schedule": "0 */6 * * *"
-    }
-  ]
-}
