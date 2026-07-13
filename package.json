@@ -6,7 +6,6 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
     "startlocal": "astro dev --host 0.0.0.0 --port 3000"
   },
   "dependencies": {

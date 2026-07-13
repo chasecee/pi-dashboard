@@ -16,12 +16,7 @@ const site = Astro.site?.href ?? "http://localhost:4321";
       content="width=device-width, initial-scale=1, maximum-scale=5"
     />
     <meta name="description" content={description} />
-    <meta
-      name="keywords"
-      content="dashboard, clock, quotes, minimalist, pi dashboard"
-    />
     <meta name="author" content="Chase" />
-    <meta name="creator" content="Chase" />
     <meta name="robots" content="index, follow" />
     <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
     <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
@@ -46,14 +41,7 @@ const site = Astro.site?.href ?? "http://localhost:4321";
     />
     <title>{title}</title>
   </head>
-  <body class="font-anonymous">
+  <body>
     <slot />
   </body>
 </html>
-
-<style is:global>
-  .font-anonymous {
-    font-family: "Anonymous Pro", monospace;
-    font-weight: 700;
-  }
-</style>
