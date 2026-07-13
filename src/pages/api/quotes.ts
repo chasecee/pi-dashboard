@@ -1,12 +1,8 @@
-export const runtime = "edge";
-export const revalidate = 86400;
+export const prerender = false;
 
 export async function GET() {
   try {
-    // Use HTTPS for the external API call
-    const response = await fetch("https://zenquotes.io/api/random", {
-      next: { revalidate: 86400 },
-    });
+    const response = await fetch("https://zenquotes.io/api/random");
 
     if (!response.ok) {
       throw new Error("Network response was not ok");
@@ -17,7 +13,8 @@ export async function GET() {
       status: 200,
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "public, s-maxage=86400, stale-while-revalidate=172800",
+        "Cache-Control":
+          "public, s-maxage=86400, stale-while-revalidate=172800",
       },
     });
   } catch (error) {

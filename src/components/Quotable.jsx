@@ -1,4 +1,3 @@
-"use client";
 import { useState, useEffect } from "react";
 
 const STORAGE_KEY = "quotable_data";
@@ -20,30 +19,25 @@ async function fetchQuote() {
 }
 
 function shouldFetchNewQuote() {
-  if (typeof window === "undefined") return false;
-  
   const timestamp = localStorage.getItem(STORAGE_TIMESTAMP_KEY);
   if (!timestamp) return true;
-  
+
   const lastFetch = parseInt(timestamp, 10);
-  const now = Date.now();
-  return now - lastFetch >= ONE_DAY_MS;
+  return Date.now() - lastFetch >= ONE_DAY_MS;
 }
 
 function getStoredQuote() {
-  if (typeof window === "undefined") return null;
   const stored = localStorage.getItem(STORAGE_KEY);
   return stored ? JSON.parse(stored) : null;
 }
 
 function storeQuote(quote) {
-  if (typeof window === "undefined") return;
   localStorage.setItem(STORAGE_KEY, JSON.stringify(quote));
   localStorage.setItem(STORAGE_TIMESTAMP_KEY, Date.now().toString());
 }
 
 export default function Quotable() {
-  const [data, setData] = useState(() => getStoredQuote());
+  const [data, setData] = useState(null);
 
   useEffect(() => {
     const updateQuote = async () => {

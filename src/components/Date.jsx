@@ -1,11 +1,9 @@
-"use client";
 import { useState, useEffect } from "react";
 
-export default function Clock() {
+export default function DateDisplay() {
   const [dateString, setDateString] = useState("");
 
   const formatDate = (date) => {
-    // Format the date here, for example: "January 01, 2024"
     return date.toLocaleDateString("en-US", {
       year: "numeric",
       month: "long",
@@ -16,7 +14,7 @@ export default function Clock() {
   useEffect(() => {
     const timerId = setInterval(() => {
       setDateString(formatDate(new Date()));
-    }, 1000); // Update every second, you might want to increase this interval
+    }, 1000);
     return () => clearInterval(timerId);
   }, []);
 

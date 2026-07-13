@@ -1,13 +1,12 @@
-"use client";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 
-const ConnectionStatus = () => {
-  const [isOnline, setIsOnline] = useState(false); // Initially false
-  const [hasMounted, setHasMounted] = useState(false); // Track if component has mounted
+export default function ConnectionStatus() {
+  const [isOnline, setIsOnline] = useState(false);
+  const [hasMounted, setHasMounted] = useState(false);
 
   useEffect(() => {
-    setHasMounted(true); // Set to true on client-side mount
-    setIsOnline(navigator.onLine); // Set actual online status after mounting
+    setHasMounted(true);
+    setIsOnline(navigator.onLine);
 
     const updateStatus = () => {
       setIsOnline(navigator.onLine);
@@ -23,7 +22,7 @@ const ConnectionStatus = () => {
   }, []);
 
   if (!hasMounted) {
-    return null; // Render nothing on the server
+    return null;
   }
 
   return (
@@ -32,12 +31,10 @@ const ConnectionStatus = () => {
         isOnline ? "text-green-700" : "text-red-700"
       }`}
     >
-      <div className="h-3 w-3 rounded-full bg-current "></div>
+      <div className="h-3 w-3 rounded-full bg-current"></div>
       <span className="opacity-70 leading-[1] relative top-[1px]">
         {isOnline ? "Online" : "Offline"}
       </span>
     </div>
   );
-};
-
-export default ConnectionStatus;
+}

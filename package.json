@@ -1,16 +1,19 @@
 {
-  "name": "nextjs",
+  "name": "pi-dashboard",
   "version": "0.1.0",
   "private": true,
+  "type": "module",
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint",
-    "startlocal": "next start -H 0.0.0.0 -p 3000"
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "startlocal": "astro dev --host 0.0.0.0 --port 3000"
   },
   "dependencies": {
-    "next": "^16.0.10",
+    "@astrojs/react": "^4.4.2",
+    "@astrojs/tailwind": "^6.0.2",
+    "@astrojs/vercel": "^9.0.5",
+    "astro": "^5.18.2",
     "react": "^19.2.3",
     "react-dom": "^19.2.3"
   },
@@ -19,8 +22,6 @@
     "@types/react": "^19.2.7",
     "@types/react-dom": "^19.2.3",
     "autoprefixer": "^10.4.22",
-    "eslint": "^9.39.1",
-    "eslint-config-next": "^16.0.10",
     "postcss": "^8.4.40",
     "tailwindcss": "^3.4.7",
     "typescript": "^5.9.3"

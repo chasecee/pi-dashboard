@@ -1,0 +1,59 @@
+---
+import "../styles/globals.css";
+
+const title = "Dashboard";
+const description =
+  "A minimalist dashboard featuring time, date, and inspirational quotes";
+const site = Astro.site?.href ?? "http://localhost:4321";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=5"
+    />
+    <meta name="description" content={description} />
+    <meta
+      name="keywords"
+      content="dashboard, clock, quotes, minimalist, pi dashboard"
+    />
+    <meta name="author" content="Chase" />
+    <meta name="creator" content="Chase" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000000" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content={site} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:site_name" content={title} />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,700;1,700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body class="font-anonymous">
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  .font-anonymous {
+    font-family: "Anonymous Pro", monospace;
+    font-weight: 700;
+  }
+</style>
