@@ -7,14 +7,15 @@ Minimal Astro dashboard: live clock, date, daily quote, and online/offline statu
 - Astro (prerendered home page)
 - React islands for client interactivity
 - Server endpoint at `/api/quotes` (ZenQuotes proxy)
-- Tailwind CSS
+- Tailwind CSS v4
 - Deployed on Vercel
+- Bun
 
 ## Develop
 
 ```bash
-npm install
-npm run dev
+bun install
+bun run dev
 ```
 
 Open http://localhost:4321
@@ -22,13 +23,13 @@ Open http://localhost:4321
 ## Build
 
 ```bash
-npm run build
+bun run build
 ```
 
 LAN on a Pi (dev server; Vercel adapter has no local preview):
 
 ```bash
-npm run startlocal
+bun run startlocal
 ```
 
 ## Deploy
