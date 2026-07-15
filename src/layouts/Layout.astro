@@ -1,4 +1,5 @@
 ---
+import { Font } from "astro:assets";
 import "../styles/globals.css";
 
 const title = "Dashboard";
@@ -33,12 +34,7 @@ const site = Astro.site?.href ?? "http://localhost:4321";
     <meta name="twitter:description" content={description} />
 
     <link rel="icon" href="/favicon.ico" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,700;1,700&display=swap"
-      rel="stylesheet"
-    />
+    <Font cssVariable="--font-anonymous" preload />
     <title>{title}</title>
   </head>
   <body>

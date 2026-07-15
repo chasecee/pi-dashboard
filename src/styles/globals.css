@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
-@theme {
-  --font-anonymous: "Anonymous Pro", monospace;
+@theme inline {
+  --font-anonymous: var(--font-anonymous);
 }
 
 body {

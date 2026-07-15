@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 
+import { Font } from "astro:assets";
 import StepsChart from "../../components/StepsChart";
 import "../../styles/globals.css";
 ---
@@ -10,10 +11,11 @@ import "../../styles/globals.css";
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <Font cssVariable="--font-anonymous" preload />
     <title>Steps Embed</title>
   </head>
-  <body class="m-0 bg-transparent text-white">
-    <main class="w-full h-svh p-2 sm:p-4">
+  <body class="m-0 bg-transparent text-white font-anonymous font-bold">
+    <main class="@container w-full h-svh p-[2cqw] [container-type:size]">
       <StepsChart client:load />
     </main>
   </body>

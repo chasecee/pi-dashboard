@@ -1,24 +1,11 @@
 import type { APIRoute } from "astro";
-import { getSteps } from "@/lib/googleHealth";
+import { getStepsPayload } from "@/lib/steps";
 
 export const prerender = false;
 
-function getGoal(): number {
-  const raw = (import.meta.env as Record<string, string | undefined>).PUBLIC_STEP_GOAL;
-  const parsed = raw ? Number.parseInt(raw, 10) : Number.NaN;
-  if (!Number.isFinite(parsed) || parsed <= 0) {
-    return 10_000;
-  }
-  return parsed;
-}
-
 export const GET: APIRoute = async () => {
   try {
-    const points = await getSteps(30);
-    const payload = {
-      goal: getGoal(),
-      points,
-    };
+    const payload = await getStepsPayload();
 
     return new Response(JSON.stringify(payload), {
       status: 200,

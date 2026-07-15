@@ -3,6 +3,12 @@ import { useState, useEffect } from "react";
 const STORAGE_KEY = "quotable_data";
 const STORAGE_TIMESTAMP_KEY = "quotable_timestamp";
 const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+const SCALE_AT = 81;
+
+function quoteScale(length) {
+  if (length <= SCALE_AT) return 1;
+  return Math.max(0.72, SCALE_AT / length);
+}
 
 async function fetchQuote() {
   try {
@@ -73,12 +79,12 @@ export default function Quotable() {
 
   return (
     <div>
-      <p className="text-balance mx-[5vw]">
+      <p className="text-balance mx-[4cqw]" style={{ fontSize: `${quoteScale(data.q.length)}em` }}>
         {data.q}
         {data.a && (
           <span>
             <span
-              className="opacity-70 ml-5 mt-5 tracking-[.2vw] font-normal uppercase text-[.5em] block whitespace-nowrap"
+              className="opacity-70 ml-[4cqw] mt-[1.5cqh] tracking-[0.2cqw] font-normal uppercase text-[.5em] block whitespace-nowrap"
               title="Source Title"
             >
               {data.a}

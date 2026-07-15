@@ -1,6 +1,11 @@
 import { Redis } from "@upstash/redis";
 
 const TOKEN_KEY = "google-health:oauth:tokens";
+const STEPS_CACHE_TTL_SECONDS = 900;
+
+function stepsCacheKey(days: number): string {
+  return `google-health:steps:${days}:${formatDate(new Date())}`;
+}
 
 type GoogleTokenRecord = {
   accessToken: string;
@@ -206,6 +211,13 @@ function buildRange(days: number): { start: Date; end: Date } {
 }
 
 export async function getSteps(days = 30): Promise<StepPoint[]> {
+  const redis = getRedisClient();
+  const cacheKey = stepsCacheKey(days);
+  const cached = await redis.get<StepPoint[]>(cacheKey);
+  if (cached && Array.isArray(cached) && cached.length > 0) {
+    return cached;
+  }
+
   const accessToken = await getAccessToken();
   const { start, end } = buildRange(days);
 
@@ -262,5 +274,6 @@ export async function getSteps(days = 30): Promise<StepPoint[]> {
     });
   }
 
+  await redis.set(cacheKey, output, { ex: STEPS_CACHE_TTL_SECONDS });
   return output;
 }

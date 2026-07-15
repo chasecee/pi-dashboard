@@ -11,29 +11,29 @@ import StepsChart from "../components/StepsChart";
 
 <Layout>
   <main
-    class="flex flex-nowrap gap-[2.5vh] h-svh overflow-hidden flex-col items-stretch justify-center p-[2vw] text-center"
+    class="flex flex-nowrap gap-[0.5vw] h-svh overflow-hidden flex-col items-stretch justify-center p-0 text-center"
   >
-    <div
-      class="rounded-xl relative ring-[1vw] text-red-700 ring-current/50 px-5 py-0 flex justify-center items-center flex-col flex-[3] min-h-0 overflow-hidden [container-type:size]"
-    >
-      <div class="text-[clamp(20px,min(7cqw,18cqh),120px)]">
-        <DateDisplay client:load />
-      </div>
-      <Clock client:load />
-    </div>
-
-    <div class="flex flex-row flex-[1.2] min-h-0">
+    <div class="flex flex-row flex-[2] min-h-0 gap-[0.5vw]">
       <div
-        class="rounded-xl px-4 py-2 relative ring-[1vw] text-purple-500 ring-current/50 font-normal flex-grow flex leading-[100%] items-center justify-center min-h-0 overflow-hidden [container-type:size] text-[clamp(14px,min(4cqw,26cqh),48px)]"
+        class="@container rounded-xl relative bg-[#bdb76b]/10 text-[#bdb76b] px-[1cqw] py-0 flex justify-center items-center flex-col flex-1 min-h-0 min-w-0 overflow-hidden [container-type:size]"
       >
-        <Quotable client:load />
-        <div class="absolute bottom-0 left-2">
+        <div class="absolute top-0 left-0">
           <ConnectionStatus client:load />
         </div>
+        <div class="text-[clamp(20px,min(7cqw,18cqh),120px)]">
+          <DateDisplay client:load />
+        </div>
+        <Clock client:load />
+      </div>
+
+      <div
+        class="@container rounded-xl px-[1cqw] py-[1.5cqh] relative bg-purple-500/10 text-purple-500 font-normal flex flex-1 leading-[100%] items-center justify-center min-h-0 min-w-0 overflow-hidden [container-type:size] text-[clamp(12px,min(3.5cqw,10cqh),48px)]"
+      >
+        <Quotable client:load />
       </div>
     </div>
 
-    <div class="flex flex-row flex-[1.6] min-h-0">
+    <div class="flex flex-row flex-1 min-h-0">
       <StepsChart client:load />
     </div>
   </main>
