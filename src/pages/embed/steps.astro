@@ -1,0 +1,20 @@
+---
+export const prerender = true;
+
+import StepsChart from "../../components/StepsChart";
+import "../../styles/globals.css";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <title>Steps Embed</title>
+  </head>
+  <body class="m-0 bg-transparent text-white">
+    <main class="w-full h-svh p-2 sm:p-4">
+      <StepsChart client:load />
+    </main>
+  </body>
+</html>

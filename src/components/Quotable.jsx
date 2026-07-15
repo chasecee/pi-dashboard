@@ -14,7 +14,10 @@ async function fetchQuote() {
     return quote;
   } catch (error) {
     console.error(error);
-    return { q: "Oops... Something went wrong" };
+    return {
+      q: "If you're not making mistakes, then you're not doing anything.",
+      a: "John Wooden",
+    };
   }
 }
 

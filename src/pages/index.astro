@@ -6,30 +6,35 @@ import Clock from "../components/Clock";
 import DateDisplay from "../components/Date";
 import ConnectionStatus from "../components/ConnectionStatus";
 import Quotable from "../components/Quotable";
+import StepsChart from "../components/StepsChart";
 ---
 
 <Layout>
   <main
-    class="flex flex-nowrap gap-[3vw] h-svh overflow-hidden flex-col items-stretch justify-center p-[2vw] text-center"
+    class="flex flex-nowrap gap-[2.5vh] h-svh overflow-hidden flex-col items-stretch justify-center p-[2vw] text-center"
   >
     <div
-      class="rounded-xl relative ring-[1vw] text-red-700 ring-current/50 px-5 py-0 flex justify-center items-center flex-col flex-grow-[2]"
+      class="rounded-xl relative ring-[1vw] text-red-700 ring-current/50 px-5 py-0 flex justify-center items-center flex-col flex-[3] min-h-0 overflow-hidden [container-type:size]"
     >
-      <div class="text-[clamp(30px,7vw,120px)]">
+      <div class="text-[clamp(20px,min(7cqw,18cqh),120px)]">
         <DateDisplay client:load />
       </div>
       <Clock client:load />
     </div>
 
-    <div class="flex flex-row gap-[18px]">
+    <div class="flex flex-row flex-[1.2] min-h-0">
       <div
-        class="rounded-xl px-4 py-16 relative ring-[1vw] text-purple-500 ring-current/50 text-[4vw] font-normal flex-grow flex leading-[100%] justify-center"
+        class="rounded-xl px-4 py-2 relative ring-[1vw] text-purple-500 ring-current/50 font-normal flex-grow flex leading-[100%] items-center justify-center min-h-0 overflow-hidden [container-type:size] text-[clamp(14px,min(4cqw,26cqh),48px)]"
       >
         <Quotable client:load />
         <div class="absolute bottom-0 left-2">
           <ConnectionStatus client:load />
         </div>
       </div>
+    </div>
+
+    <div class="flex flex-row flex-[1.6] min-h-0">
+      <StepsChart client:load />
     </div>
   </main>
 </Layout>
