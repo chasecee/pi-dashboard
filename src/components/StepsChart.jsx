@@ -353,7 +353,7 @@ export default function StepsChart() {
   return (
     <section className={`${SHELL} ${colors.bg}`}>
       <div className="flex items-baseline justify-between gap-[2cqw] shrink-0">
-        <div className={`${TITLE} ${colors.accent}`}>Chase's Accountability Tracker</div>
+        <div className={`${TITLE} ${colors.accent}`}>Chase's Steps Tracker - 10k Steps a Day</div>
         <div className={`${TITLE} ${colors.accent}`}>{view.header}</div>
       </div>
 
