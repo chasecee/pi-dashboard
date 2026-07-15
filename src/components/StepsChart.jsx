@@ -148,7 +148,7 @@ const THEMES = {
 };
 
 const SHELL =
-  "@container w-full h-full min-h-0 rounded-xl [container-type:size] flex flex-col gap-[3cqh] p-[clamp(8px,4cqw,24px)]";
+  "@container w-full h-full min-h-0 [container-type:size] flex flex-col gap-[3cqh] p-[clamp(8px,4cqw,24px)]";
 const TITLE = "text-[clamp(10px,3cqw,15px)] font-bold tracking-[0.05em]";
 const DOT =
   "size-[clamp(32px,min(12cqw,41cqh),120px)] rounded-full box-border relative overflow-hidden shrink-0 border-[clamp(2px,0.55cqw,5px)]";

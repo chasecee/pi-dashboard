@@ -11,11 +11,11 @@ import StepsChart from "../components/StepsChart";
 
 <Layout>
   <main
-    class="flex flex-nowrap gap-[0.5vw] h-svh overflow-hidden flex-col items-stretch justify-center p-0 text-center"
+    class="flex flex-nowrap h-svh overflow-hidden flex-col items-stretch justify-center p-0 text-center"
   >
-    <div class="flex flex-row flex-[2] min-h-0 gap-[0.5vw]">
+    <div class="flex flex-row flex-[2] min-h-0">
       <div
-        class="@container rounded-xl relative bg-[#bdb76b]/10 text-[#bdb76b] px-[1cqw] py-0 flex justify-center items-center flex-col flex-1 min-h-0 min-w-0 overflow-hidden [container-type:size]"
+        class="@container relative bg-[#bdb76b]/10 text-[#bdb76b] px-[1cqw] py-0 flex justify-center items-center flex-col flex-1 min-h-0 min-w-0 overflow-hidden [container-type:size]"
       >
         <div class="absolute top-0 left-0">
           <ConnectionStatus client:load />
@@ -27,7 +27,7 @@ import StepsChart from "../components/StepsChart";
       </div>
 
       <div
-        class="@container rounded-xl px-[1cqw] py-[1.5cqh] relative bg-purple-500/10 text-purple-500 font-normal flex flex-1 leading-[100%] items-center justify-center min-h-0 min-w-0 overflow-hidden [container-type:size] text-[clamp(12px,min(3.5cqw,10cqh),48px)]"
+        class="@container px-[1cqw] py-[1.5cqh] relative bg-purple-500/10 text-purple-500 font-normal flex flex-1 leading-[100%] items-center justify-center min-h-0 min-w-0 overflow-hidden [container-type:size] text-[clamp(12px,min(3.5cqw,10cqh),48px)]"
       >
         <Quotable client:load />
       </div>
