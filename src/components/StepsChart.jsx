@@ -142,9 +142,9 @@ function getHeader(streak, best, todayState) {
 }
 
 const THEMES = {
-  alive: { bg: "bg-[#1f7a33]/10", accent: "text-[#3fb950]" },
-  broken: { bg: "bg-[#6b2323]/10", accent: "text-[#d42a1e]" },
-  fresh: { bg: "bg-[#333]/10", accent: "text-[#8b949e]" },
+  alive: { bg: "bg-[#1f7a33]/25", accent: "text-[#3fb950]" },
+  broken: { bg: "bg-[#6b2323]/25", accent: "text-[#d42a1e]" },
+  fresh: { bg: "bg-[#333]/20", accent: "text-[#8b949e]" },
 };
 
 const SHELL =
@@ -251,7 +251,7 @@ function StepsSkeleton() {
   const todayKey = formatDate(today);
 
   return (
-    <section className={`${SHELL} bg-[#333]/10`} aria-busy="true" aria-label="Loading steps">
+    <section className={`${SHELL} bg-[#333]/20`} aria-busy="true" aria-label="Loading steps">
       <div className="flex items-baseline justify-between gap-[2cqw] shrink-0">
         <div className={`${TITLE} text-[#8b949e]`}>Chase's Accountability Tracker</div>
         <Bone className={TITLE}>99 day streak · goal hit</Bone>
@@ -339,7 +339,7 @@ export default function StepsChart() {
 
   if (error) {
     return (
-      <section className={`${SHELL} bg-[#6b2323]/10`}>
+      <section className={`${SHELL} bg-[#6b2323]/25`}>
         <div className={`${TITLE} text-[#d42a1e]`}>Chase's Accountability Tracker</div>
         <div className="text-[clamp(10px,2.8cqw,14px)] text-[#8b949e]">{error}</div>
       </section>
