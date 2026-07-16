@@ -13,8 +13,7 @@ export async function GET() {
       status: 200,
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control":
-          "public, s-maxage=86400, stale-while-revalidate=172800",
+        "Cache-Control": "no-store",
       },
     });
   } catch (error) {

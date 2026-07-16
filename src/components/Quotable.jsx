@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 
 const STORAGE_KEY = "quotable_data";
 const STORAGE_TIMESTAMP_KEY = "quotable_timestamp";
-const ONE_DAY_MS = 24 * 60 * 60 * 1000;
+const QUOTE_TTL_MS = 12 * 60 * 60 * 1000;
+const CHECK_MS = 60 * 60 * 1000;
 const SCALE_AT = 81;
 
 function quoteScale(length) {
@@ -32,7 +33,7 @@ function shouldFetchNewQuote() {
   if (!timestamp) return true;
 
   const lastFetch = parseInt(timestamp, 10);
-  return Date.now() - lastFetch >= ONE_DAY_MS;
+  return Date.now() - lastFetch >= QUOTE_TTL_MS;
 }
 
 function getStoredQuote() {
@@ -46,20 +47,15 @@ function storeQuote(quote) {
 }
 
 export default function Quotable() {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(() =>
+    typeof window === "undefined" ? null : getStoredQuote(),
+  );
 
   useEffect(() => {
     const updateQuote = async () => {
-      if (shouldFetchNewQuote()) {
-        const quote = await fetchQuote();
-        storeQuote(quote);
-        setData(quote);
-      } else {
-        const stored = getStoredQuote();
-        if (stored) {
-          setData(stored);
-        }
-      }
+      const quote = await fetchQuote();
+      storeQuote(quote);
+      setData(quote);
     };
 
     updateQuote();
@@ -68,7 +64,7 @@ export default function Quotable() {
       if (shouldFetchNewQuote()) {
         updateQuote();
       }
-    }, 60 * 60 * 1000);
+    }, CHECK_MS);
 
     return () => clearInterval(checkInterval);
   }, []);
