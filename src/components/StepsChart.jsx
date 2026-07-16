@@ -1,14 +1,14 @@
 import { useEffect, useMemo, useState } from "react";
 import X from "./icons/X.jsx";
-import Frown from "./icons/Frown.jsx";
-import Meh from "./icons/Meh.jsx";
 import Smile from "./icons/Smile.jsx";
 import QuestionMark from "./icons/QuestionMark.jsx";
+import Walker from "./icons/Walker.jsx";
 
 const STORAGE_KEY = "steps_payload";
 const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const CHAIN_LENGTH = 7;
 const TODAY_INDEX = CHAIN_LENGTH - 2;
+const CLOSE_STEPS = 9000;
 
 function getStoredPayload() {
   try {
@@ -46,51 +46,31 @@ function getChainDays(today) {
 function getDayState(date, steps, goal, today) {
   const isFuture = date > today;
   const isToday = formatDate(date) === formatDate(today);
-  const pct = goal > 0 ? Math.min(100, Math.round((steps / goal) * 100)) : 0;
+  const pct = goal > 0 ? Math.round((steps / goal) * 100) : 0;
   const hitGoal = steps >= goal;
 
   if (isFuture) return { kind: "future" };
   if (steps === 0) return { kind: "no-data" };
   if (isToday) {
-    return hitGoal ? { kind: "complete", pct: 100 } : { kind: "in-progress", pct };
+    return hitGoal ? { kind: "complete", pct } : { kind: "in-progress", pct };
   }
-  if (hitGoal) return { kind: "hit" };
+  if (hitGoal) return { kind: "hit", pct };
+  if (steps >= CLOSE_STEPS) return { kind: "close", pct };
   return { kind: "missed", pct };
 }
 
-function getMood(pct) {
-  if (pct >= 80) {
-    return {
-      Icon: Smile,
-      color: "text-[#eab308]",
-      border: "border-[#eab308]",
-      fill: "bg-[#713f12]",
-    };
-  }
-  if (pct >= 70) {
-    return {
-      Icon: Meh,
-      color: "text-[#f97316]",
-      border: "border-[#f97316]",
-      fill: "bg-[#7c2d12]",
-    };
-  }
-  return {
-    Icon: Frown,
-    color: "text-[#ef4444]",
-    border: "border-[#ef4444]",
-    fill: "bg-[#7f1d1d]",
-  };
+function breaksChain(kind) {
+  return kind === "missed" || kind === "close";
 }
 
 function getConnector(left, right) {
-  if (right.kind === "future") return "inactive";
+  if (right.kind === "future") return "future";
   if (left.kind === "no-data" || right.kind === "no-data") return "nodata";
   if (left.kind === "hit" && (right.kind === "hit" || right.kind === "complete")) {
     return "solid";
   }
-  if (left.kind === "hit" && right.kind === "in-progress") return "gradient";
-  if (left.kind === "missed" || (left.kind === "hit" && right.kind === "missed")) {
+  if (left.kind === "hit" && right.kind === "in-progress") return "today";
+  if (breaksChain(left.kind) || (left.kind === "hit" && breaksChain(right.kind))) {
     return "broken";
   }
   return "inactive";
@@ -128,7 +108,7 @@ function calcBestStreak(points, goal) {
 
 function getTheme(streak, days) {
   if (streak > 0) return "alive";
-  if (days.some((day) => day.state.kind === "missed")) return "broken";
+  if (days.some((day) => breaksChain(day.state.kind))) return "broken";
   return "fresh";
 }
 
@@ -152,14 +132,15 @@ const SHELL =
 const TITLE = "text-[clamp(10px,3cqw,15px)] font-bold tracking-[0.05em]";
 const DOT =
   "size-[clamp(32px,min(12cqw,41cqh),120px)] rounded-full box-border relative overflow-hidden shrink-0 border-[clamp(2px,0.55cqw,5px)]";
+const DOT_SLOT = "w-[clamp(32px,min(12cqw,41cqh),120px)] shrink-0 text-center";
 const BONE = "animate-pulse rounded-sm bg-[#333]";
 
 function Connector({ kind }) {
-  const base = "flex-1 shrink mb-[6cqh] min-w-0";
+  const base = "flex-1 shrink min-w-0";
   const thickness = "h-[clamp(2px,0.55cqw,5px)]";
   if (kind === "solid") return <div className={`${base} ${thickness} bg-[#3fb950]`} />;
-  if (kind === "gradient") {
-    return <div className={`${base} ${thickness} bg-gradient-to-r from-[#3fb950] to-[#144a22]`} />;
+  if (kind === "today") {
+    return <div className={`${base} ${thickness} bg-gradient-to-r from-[#3fb950] to-white/55`} />;
   }
   if (kind === "broken") {
     return (
@@ -175,12 +156,13 @@ function Connector({ kind }) {
       />
     );
   }
+  if (kind === "future") return <div className={`${base} ${thickness} bg-white/14`} />;
   return <div className={`${base} ${thickness} bg-[#161616]`} />;
 }
 
 function DayDot({ state }) {
   if (state.kind === "future") {
-    return <div className={`${DOT} border-[#222]`} />;
+    return <div className={`${DOT} border-white/14`} />;
   }
   if (state.kind === "hit" || state.kind === "complete") {
     return (
@@ -193,18 +175,24 @@ function DayDot({ state }) {
     );
   }
   if (state.kind === "in-progress") {
-    const mood = getMood(state.pct);
     return (
-      <div className={`${DOT} border-dashed ${mood.border}`}>
+      <div className={`${DOT} border-dashed border-white/55`}>
         <div
-          className={`absolute bottom-0 left-0 right-0 ${mood.fill}`}
-          style={{ height: `${state.pct}%` }}
+          className="absolute bottom-0 left-0 right-0 bg-white/15"
+          style={{ height: `${Math.min(100, state.pct)}%` }}
         />
-        <div className={`absolute inset-0 flex flex-col items-center justify-center gap-[0.4cqh] ${mood.color}`}>
-          <mood.Icon className="size-[40%]" />
-          <span className="text-[clamp(7px,2cqw,12px)] font-extrabold leading-none">
-            {state.pct}%
-          </span>
+        <div className="absolute inset-0 flex items-center justify-center text-white/90">
+          <Walker className="size-[55%]" state="walk" />
+        </div>
+      </div>
+    );
+  }
+  if (state.kind === "close") {
+    return (
+      <div className={`${DOT} border-[#a16207]`}>
+        <div className="absolute inset-0 bg-[#713f12]" />
+        <div className="absolute inset-0 flex items-center justify-center text-[#eab308]">
+          <X className="size-[55%]" />
         </div>
       </div>
     );
@@ -220,7 +208,10 @@ function DayDot({ state }) {
   }
   return (
     <div className={`${DOT} border-[#6b2323]`}>
-      <div className="absolute bottom-0 left-0 right-0 bg-[#6b2323]" style={{ height: `${state.pct}%` }} />
+      <div
+        className="absolute bottom-0 left-0 right-0 bg-[#6b2323]"
+        style={{ height: `${Math.min(100, state.pct)}%` }}
+      />
       <div className="absolute inset-0 flex items-center justify-center text-[#ff6b5e]">
         <X className="size-[55%]" />
       </div>
@@ -229,11 +220,18 @@ function DayDot({ state }) {
 }
 
 function dayLabelClass(state, isToday) {
-  const base = "text-[clamp(10px,3cqw,14px)]";
+  const base = "text-[clamp(9px,2.6cqw,13px)] whitespace-nowrap";
   if (isToday) return `${base} text-[#e6edf3] font-bold`;
   if (state.kind === "missed") return `${base} text-[#d42a1e]`;
-  if (state.kind === "future") return `${base} text-[#333]`;
+  if (state.kind === "close") return `${base} text-[#eab308]`;
+  if (state.kind === "hit") return `${base} text-[#3fb950]`;
+  if (state.kind === "future") return `${base} text-white/22`;
   return `${base} text-[#555]`;
+}
+
+function dayStatsText(state, steps) {
+  if (state.pct == null) return null;
+  return new Intl.NumberFormat().format(steps);
 }
 
 function Bone({ className = "", children }) {
@@ -257,26 +255,33 @@ function StepsSkeleton() {
         <Bone className={TITLE}>99 day streak · goal hit</Bone>
       </div>
 
-      <div className="flex items-center flex-1 min-h-0">
-        {days.map((date, index) => {
-          const key = formatDate(date);
-          const isToday = key === todayKey;
-          return (
-            <div key={key} className="contents">
-              <div className="flex flex-col items-center gap-[1cqh] shrink-0">
-                <div className={`${DOT} border-[#222]`}>
-                  <div className="absolute inset-0 animate-pulse bg-[#222]" />
-                </div>
-                <div
-                  className={`text-[clamp(10px,3cqw,14px)] ${isToday ? "text-[#555] font-bold" : "text-[#333]"}`}
-                >
-                  {dayLabel(date)}
-                </div>
+      <div className="flex flex-col flex-1 min-h-0 justify-center gap-[1cqh]">
+        <div className="flex items-center">
+          {days.map((date, index) => (
+            <div key={formatDate(date)} className="contents">
+              <div className={`${DOT} border-[#222]`}>
+                <div className="absolute inset-0 animate-pulse bg-[#222]" />
               </div>
               {index < days.length - 1 ? <Connector kind="inactive" /> : null}
             </div>
-          );
-        })}
+          ))}
+        </div>
+        <div className="flex">
+          {days.map((date, index) => {
+            const key = formatDate(date);
+            const isToday = key === todayKey;
+            return (
+              <div key={key} className="contents">
+                <div
+                  className={`${DOT_SLOT} text-[clamp(10px,3cqw,14px)] ${isToday ? "text-[#555] font-bold" : "text-[#333]"}`}
+                >
+                  {dayLabel(date)}
+                </div>
+                {index < days.length - 1 ? <div className="flex-1 min-w-0" /> : null}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
@@ -357,20 +362,33 @@ export default function StepsChart() {
         <div className={`${TITLE} ${colors.accent}`}>{view.header}</div>
       </div>
 
-      <div className="flex items-center flex-1 min-h-0">
-        {view.days.map((day, index) => (
-          <div key={formatDate(day.date)} className="contents">
-            <div className="flex flex-col items-center gap-[1cqh] shrink-0">
+      <div className="flex flex-col flex-1 min-h-0 justify-center gap-[1cqh]">
+        <div className="flex items-center">
+          {view.days.map((day, index) => (
+            <div key={formatDate(day.date)} className="contents">
               <DayDot state={day.state} />
-              <div className={dayLabelClass(day.state, formatDate(day.date) === formatDate(view.today))}>
-                {dayLabel(day.date)}
-              </div>
+              {index < view.days.length - 1 ? (
+                <Connector kind={getConnector(day.state, view.days[index + 1].state)} />
+              ) : null}
             </div>
-            {index < view.days.length - 1 ? (
-              <Connector kind={getConnector(day.state, view.days[index + 1].state)} />
-            ) : null}
-          </div>
-        ))}
+          ))}
+        </div>
+        <div className="flex items-start">
+          {view.days.map((day, index) => {
+            const stats = dayStatsText(day.state, day.steps);
+            return (
+              <div key={formatDate(day.date)} className="contents">
+                <div
+                  className={`${DOT_SLOT} flex flex-col items-center leading-tight ${dayLabelClass(day.state, formatDate(day.date) === formatDate(view.today))}`}
+                >
+                  <span>{dayLabel(day.date)}</span>
+                  {stats ? <span className="opacity-50">{stats}</span> : null}
+                </div>
+                {index < view.days.length - 1 ? <div className="flex-1 min-w-0" /> : null}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
