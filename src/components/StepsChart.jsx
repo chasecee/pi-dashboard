@@ -9,6 +9,8 @@ const DAY_LABELS = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 const CHAIN_LENGTH = 7;
 const TODAY_INDEX = CHAIN_LENGTH - 2;
 const CLOSE_STEPS = 9000;
+const POLL_MS = 15 * 60 * 1000;
+const TICK_MS = 60_000;
 
 function getStoredPayload() {
   try {
@@ -311,14 +313,16 @@ export default function StepsChart() {
 
   useEffect(() => {
     let alive = true;
+
     async function load() {
+      if (document.visibilityState === "hidden") return;
       try {
         const response = await fetch("/api/steps", { credentials: "omit" });
         if (!response.ok) throw new Error("Failed to fetch steps");
         const data = await response.json();
         if (!alive) return;
         storePayload(data);
-        setPayload(data);
+        setPayload((prev) => (prev?.updatedAt === data.updatedAt ? prev : data));
         setError("");
         setNow(Date.now());
       } catch (err) {
@@ -328,11 +332,20 @@ export default function StepsChart() {
         }
       }
     }
+
     load();
-    const tick = setInterval(() => setNow(Date.now()), 60_000);
+    const poll = setInterval(load, POLL_MS);
+    const tick = setInterval(() => setNow(Date.now()), TICK_MS);
+    const onVisible = () => {
+      if (document.visibilityState === "visible") load();
+    };
+    document.addEventListener("visibilitychange", onVisible);
+
     return () => {
       alive = false;
+      clearInterval(poll);
       clearInterval(tick);
+      document.removeEventListener("visibilitychange", onVisible);
     };
   }, []);
 
