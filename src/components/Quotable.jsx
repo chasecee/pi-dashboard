@@ -74,20 +74,19 @@ export default function Quotable() {
   }
 
   return (
-    <div>
+    <div className="relative">
       <p className="text-balance mx-[4cqw]" style={{ fontSize: `${quoteScale(data.q.length)}em` }}>
         {data.q}
-        {data.a && (
-          <span>
-            <span
-              className="opacity-70 ml-[4cqw] mt-[1.5cqh] tracking-[0.2cqw] font-normal uppercase text-[.5em] block whitespace-nowrap"
-              title="Source Title"
-            >
-              {data.a}
-            </span>
-          </span>
-        )}
       </p>
+      {data.a ? (
+        <span
+          className="absolute left-0 right-0 top-full mt-[1.5cqh] opacity-70 tracking-[0.2cqw] font-normal uppercase whitespace-nowrap"
+          style={{ fontSize: `${quoteScale(data.q.length) * 0.5}em` }}
+          title="Source Title"
+        >
+          {data.a}
+        </span>
+      ) : null}
     </div>
   );
 }

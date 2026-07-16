@@ -18,10 +18,14 @@ import StepsChart from "../components/StepsChart";
         <div class="absolute top-0 left-0">
           <ConnectionStatus client:load />
         </div>
-        <div class="text-[clamp(20px,min(7cqw,18cqh),120px)]">
-          <DateDisplay client:load />
+        <div class="relative w-full">
+          <div
+            class="absolute left-0 right-0 bottom-full mb-[1.5cqh] text-[clamp(16px,min(5.5cqw,14cqh),96px)]"
+          >
+            <DateDisplay client:load />
+          </div>
+          <Clock client:load />
         </div>
-        <Clock client:load />
       </div>
       <div
         class="@container px-[1cqw] py-[1.5cqh] relative [--bg-color:color-mix(in_srgb,var(--color-purple-500)_15%,black)] bg-[var(--bg-color)] text-purple-500 font-normal flex leading-[100%] items-center justify-center min-h-0 min-w-0 overflow-hidden [container-type:size] text-[clamp(12px,min(3.5cqw,10cqh),48px)]"

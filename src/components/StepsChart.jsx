@@ -201,7 +201,7 @@ function DayDot({ state }) {
           className="absolute left-1/2 z-10 w-[105%] aspect-square -translate-x-1/2"
           style={{ bottom: `${pct}%` }}
         >
-          <Walker className="size-full relative top-[30%] left-[-2px] [filter:drop-shadow(0px_0px_14px_var(--bg-color))]" />
+          <Walker className="size-full relative top-[10%] left-[-2px] [filter:drop-shadow(0px_0px_14px_var(--bg-color))]" />
         </div>
       </div>
     );
