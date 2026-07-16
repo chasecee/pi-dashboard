@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { STEPS_CACHE_TTL_SECONDS } from "@/lib/googleHealth";
 import { getStepsPayload } from "@/lib/steps";
 
 export const prerender = false;
@@ -11,7 +12,7 @@ export const GET: APIRoute = async () => {
       status: 200,
       headers: {
         "Content-Type": "application/json",
-        "Cache-Control": "public, s-maxage=1800, stale-while-revalidate=3600",
+        "Cache-Control": `public, max-age=${STEPS_CACHE_TTL_SECONDS}, s-maxage=${STEPS_CACHE_TTL_SECONDS}, stale-while-revalidate=3600`,
       },
     });
   } catch (error) {

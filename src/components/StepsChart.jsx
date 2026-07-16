@@ -130,6 +130,7 @@ const THEMES = {
 const SHELL =
   "@container w-full h-full min-h-0 [container-type:size] flex flex-col gap-0 p-[clamp(8px,4cqw,24px)]";
 const TITLE = "text-[clamp(10px,3cqw,15px)] font-bold tracking-[0.05em]";
+const FOOTER = "text-[clamp(8px,2.2cqw,12px)] text-white/35 shrink-0";
 const DOT =
   "size-[clamp(32px,min(12cqw,41cqh),120px)] rounded-full box-border relative overflow-hidden shrink-0 border-[clamp(2px,0.55cqw,5px)]";
 const DOT_SLOT = "w-[clamp(32px,min(12cqw,41cqh),120px)] shrink-0 text-center";
@@ -234,6 +235,20 @@ function dayStatsText(state, steps) {
   return new Intl.NumberFormat().format(steps);
 }
 
+function formatUpdatedAt(updatedAt, now) {
+  const ms = now - new Date(updatedAt).getTime();
+  if (!Number.isFinite(ms) || ms < 0) return null;
+  const mins = Math.floor(ms / 60_000);
+  if (mins < 1) return "Updated just now";
+  if (mins === 1) return "Updated 1 min ago";
+  if (mins < 60) return `Updated ${mins} mins ago`;
+  const hours = Math.floor(mins / 60);
+  if (hours === 1) return "Updated 1 hour ago";
+  if (hours < 24) return `Updated ${hours} hours ago`;
+  const days = Math.floor(hours / 24);
+  return days === 1 ? "Updated 1 day ago" : `Updated ${days} days ago`;
+}
+
 function Bone({ className = "", children }) {
   return (
     <span className={`${BONE} text-transparent select-none ${className}`} aria-hidden="true">
@@ -292,18 +307,20 @@ export default function StepsChart() {
     typeof window === "undefined" ? null : getStoredPayload(),
   );
   const [error, setError] = useState("");
+  const [now, setNow] = useState(() => Date.now());
 
   useEffect(() => {
     let alive = true;
     async function load() {
       try {
-        const response = await fetch("/api/steps");
+        const response = await fetch("/api/steps", { credentials: "omit" });
         if (!response.ok) throw new Error("Failed to fetch steps");
         const data = await response.json();
         if (!alive) return;
         storePayload(data);
         setPayload(data);
         setError("");
+        setNow(Date.now());
       } catch (err) {
         if (!alive) return;
         if (!getStoredPayload()) {
@@ -312,8 +329,10 @@ export default function StepsChart() {
       }
     }
     load();
+    const tick = setInterval(() => setNow(Date.now()), 60_000);
     return () => {
       alive = false;
+      clearInterval(tick);
     };
   }, []);
 
@@ -339,8 +358,9 @@ export default function StepsChart() {
       today,
       theme,
       header: getHeader(streak, best, todayState),
+      updated: payload?.updatedAt ? formatUpdatedAt(payload.updatedAt, now) : null,
     };
-  }, [payload]);
+  }, [payload, now]);
 
   if (error) {
     return (
@@ -358,7 +378,7 @@ export default function StepsChart() {
   return (
     <section className={`${SHELL} ${colors.bg}`}>
       <div className="flex items-baseline justify-between gap-[2cqw] shrink-0">
-        <div className={`${TITLE} ${colors.accent}`}>Chase's Steps Tracker - 10k Steps a Day</div>
+        <div className={`${TITLE} ${colors.accent}`}>Chase's 10k Steps a Day</div>
         <div className={`${TITLE} ${colors.accent}`}>{view.header}</div>
       </div>
 
@@ -390,6 +410,8 @@ export default function StepsChart() {
           })}
         </div>
       </div>
+
+      {view.updated ? <div className={FOOTER}>{view.updated}</div> : null}
     </section>
   );
 }

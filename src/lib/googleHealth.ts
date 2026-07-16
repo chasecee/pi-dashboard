@@ -1,10 +1,10 @@
 import { Redis } from "@upstash/redis";
 
 const TOKEN_KEY = "google-health:oauth:tokens";
-const STEPS_CACHE_TTL_SECONDS = 900;
+export const STEPS_CACHE_TTL_SECONDS = 900;
 
 function stepsCacheKey(days: number): string {
-  return `google-health:steps:${days}:${formatDate(new Date())}`;
+  return `google-health:steps:v2:${days}:${formatDate(new Date())}`;
 }
 
 type GoogleTokenRecord = {
@@ -39,6 +39,11 @@ type DailyRollupResponse = {
 export type StepPoint = {
   date: string;
   steps: number;
+};
+
+export type StepsCache = {
+  points: StepPoint[];
+  updatedAt: string;
 };
 
 function requireEnv(name: string): string {
@@ -210,11 +215,11 @@ function buildRange(days: number): { start: Date; end: Date } {
   return { start, end: endExclusive };
 }
 
-export async function getSteps(days = 30): Promise<StepPoint[]> {
+export async function getSteps(days = 30): Promise<StepsCache> {
   const redis = getRedisClient();
   const cacheKey = stepsCacheKey(days);
-  const cached = await redis.get<StepPoint[]>(cacheKey);
-  if (cached && Array.isArray(cached) && cached.length > 0) {
+  const cached = await redis.get<StepsCache>(cacheKey);
+  if (cached?.points?.length && cached.updatedAt) {
     return cached;
   }
 
@@ -264,16 +269,20 @@ export async function getSteps(days = 30): Promise<StepPoint[]> {
     stepMap.set(isoDate, Number.isFinite(steps) ? steps : 0);
   }
 
-  const output: StepPoint[] = [];
+  const points: StepPoint[] = [];
   for (let i = 0; i < days; i += 1) {
     const day = addDays(start, i);
     const key = formatDate(day);
-    output.push({
+    points.push({
       date: key,
       steps: stepMap.get(key) ?? 0,
     });
   }
 
-  await redis.set(cacheKey, output, { ex: STEPS_CACHE_TTL_SECONDS });
-  return output;
+  const result: StepsCache = {
+    points,
+    updatedAt: new Date().toISOString(),
+  };
+  await redis.set(cacheKey, result, { ex: STEPS_CACHE_TTL_SECONDS });
+  return result;
 }

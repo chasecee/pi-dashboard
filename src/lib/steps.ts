@@ -3,6 +3,7 @@ import { getSteps } from "@/lib/googleHealth";
 export type StepsPayload = {
   goal: number;
   points: Array<{ date: string; steps: number }>;
+  updatedAt: string;
 };
 
 export function getGoal(): number {
@@ -15,9 +16,10 @@ export function getGoal(): number {
 }
 
 export async function getStepsPayload(): Promise<StepsPayload> {
-  const points = await getSteps(30);
+  const { points, updatedAt } = await getSteps(30);
   return {
     goal: getGoal(),
     points,
+    updatedAt,
   };
 }
