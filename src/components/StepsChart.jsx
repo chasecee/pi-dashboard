@@ -288,7 +288,7 @@ function StepsSkeleton() {
       aria-label="Loading steps"
     >
       <div className="flex items-baseline justify-between gap-[2cqw] shrink-0">
-        <div className={`${TITLE} text-[#8b949e]`}>Chase's Accountability Tracker</div>
+        <div className={`${TITLE} text-[#8b949e]`}>Chase's 10k Steps a Day</div>
         <Bone className={TITLE}>99 day streak · goal hit</Bone>
       </div>
 
@@ -303,22 +303,27 @@ function StepsSkeleton() {
             </div>
           ))}
         </div>
-        <div className="flex">
+        <div className="flex items-start">
           {days.map((date, index) => {
             const key = formatDate(date);
             const isToday = key === todayKey;
             return (
               <div key={key} className="contents">
                 <div
-                  className={`${DOT_SLOT} text-[clamp(10px,3cqw,14px)] ${isToday ? "text-[#555] font-bold" : "text-[#333]"}`}
+                  className={`${DOT_SLOT} flex flex-col items-center leading-tight text-[clamp(9px,2.6cqw,13px)] whitespace-nowrap ${isToday ? "text-[#555] font-bold" : "text-[#333]"}`}
                 >
-                  {dayLabel(date)}
+                  <span>{dayLabel(date)}</span>
+                  <span className="invisible">9,999</span>
                 </div>
                 {index < days.length - 1 ? <div className="flex-1 min-w-0" /> : null}
               </div>
             );
           })}
         </div>
+      </div>
+
+      <div className={FOOTER}>
+        <Bone>Updated 99 mins ago</Bone>
       </div>
     </section>
   );
