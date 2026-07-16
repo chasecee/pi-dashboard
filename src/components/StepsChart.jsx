@@ -124,17 +124,27 @@ function getHeader(streak, best, todayState) {
 }
 
 const THEMES = {
-  alive: { bg: "bg-[#1f7a33]/25", accent: "text-[#3fb950]" },
-  broken: { bg: "bg-[#6b2323]/25", accent: "text-[#d42a1e]" },
-  fresh: { bg: "bg-[#333]/20", accent: "text-[#8b949e]" },
+  alive: {
+    bg: "[--bg-color:color-mix(in_srgb,#1f7a33_25%,black)] bg-[var(--bg-color)]",
+    accent: "text-[#3fb950]",
+  },
+  broken: {
+    bg: "[--bg-color:color-mix(in_srgb,#6b2323_25%,black)] bg-[var(--bg-color)]",
+    accent: "text-[#d42a1e]",
+  },
+  fresh: {
+    bg: "[--bg-color:color-mix(in_srgb,#333_20%,black)] bg-[var(--bg-color)]",
+    accent: "text-[#8b949e]",
+  },
 };
 
 const SHELL =
   "@container w-full h-full min-h-0 [container-type:size] flex flex-col gap-0 p-[clamp(8px,4cqw,24px)]";
 const TITLE = "text-[clamp(10px,3cqw,15px)] font-bold tracking-[0.05em]";
 const FOOTER = "text-[clamp(8px,2.2cqw,12px)] text-white/35 shrink-0";
-const DOT =
-  "size-[clamp(32px,min(12cqw,41cqh),120px)] rounded-full box-border relative overflow-hidden shrink-0 border-[clamp(2px,0.55cqw,5px)]";
+const DOT_BASE =
+  "size-[clamp(32px,min(12cqw,41cqh),120px)] rounded-full box-border relative shrink-0 border-[clamp(2px,0.55cqw,5px)]";
+const DOT = `${DOT_BASE} overflow-hidden`;
 const DOT_SLOT = "w-[clamp(32px,min(12cqw,41cqh),120px)] shrink-0 text-center";
 const BONE = "animate-pulse rounded-sm bg-[#333]";
 
@@ -178,14 +188,20 @@ function DayDot({ state }) {
     );
   }
   if (state.kind === "in-progress") {
+    const pct = Math.min(100, state.pct);
     return (
-      <div className={`${DOT} border-dashed border-white/55`}>
+      <div className={`${DOT_BASE} overflow-visible border-dashed border-white/55`}>
+        <div className="absolute inset-0 overflow-hidden rounded-full">
+          <div
+            className="absolute bottom-0 left-0 right-0 bg-white/15"
+            style={{ height: `${pct}%` }}
+          />
+        </div>
         <div
-          className="absolute bottom-0 left-0 right-0 bg-white/15"
-          style={{ height: `${Math.min(100, state.pct)}%` }}
-        />
-        <div className="absolute inset-0 flex items-center justify-center text-white/90">
-          <Walker className="size-[55%]" state="walk" />
+          className="absolute left-1/2 z-10 w-[105%] aspect-square -translate-x-1/2"
+          style={{ bottom: `${pct}%` }}
+        >
+          <Walker className="size-full relative top-[30%] left-[-2px] [filter:drop-shadow(0px_0px_14px_var(--bg-color))]" />
         </div>
       </div>
     );
@@ -266,7 +282,11 @@ function StepsSkeleton() {
   const todayKey = formatDate(today);
 
   return (
-    <section className={`${SHELL} bg-[#333]/20`} aria-busy="true" aria-label="Loading steps">
+    <section
+      className={`${SHELL} [--bg-color:color-mix(in_srgb,#333_20%,black)] bg-[var(--bg-color)]`}
+      aria-busy="true"
+      aria-label="Loading steps"
+    >
       <div className="flex items-baseline justify-between gap-[2cqw] shrink-0">
         <div className={`${TITLE} text-[#8b949e]`}>Chase's Accountability Tracker</div>
         <Bone className={TITLE}>99 day streak · goal hit</Bone>
@@ -377,7 +397,9 @@ export default function StepsChart() {
 
   if (error) {
     return (
-      <section className={`${SHELL} bg-[#6b2323]/25`}>
+      <section
+        className={`${SHELL} [--bg-color:color-mix(in_srgb,#6b2323_25%,black)] bg-[var(--bg-color)]`}
+      >
         <div className={`${TITLE} text-[#d42a1e]`}>Chase's Accountability Tracker</div>
         <div className="text-[clamp(10px,2.8cqw,14px)] text-[#8b949e]">{error}</div>
       </section>

@@ -13,7 +13,7 @@ import StepsChart from "../components/StepsChart";
   <main class="grid h-svh grid-rows-[2fr_1fr] overflow-hidden p-0 text-center">
     <div class="grid grid-cols-2 min-h-0">
       <div
-        class="@container relative bg-[#5b9ea8]/15 text-[#7ebdc8] px-[1cqw] py-0 flex justify-center items-center flex-col min-h-0 min-w-0 overflow-hidden [container-type:size]"
+        class="@container relative [--bg-color:color-mix(in_srgb,#5b9ea8_15%,black)] bg-[var(--bg-color)] text-[#7ebdc8] px-[1cqw] py-0 flex justify-center items-center flex-col min-h-0 min-w-0 overflow-hidden [container-type:size]"
       >
         <div class="absolute top-0 left-0">
           <ConnectionStatus client:load />
@@ -24,7 +24,7 @@ import StepsChart from "../components/StepsChart";
         <Clock client:load />
       </div>
       <div
-        class="@container px-[1cqw] py-[1.5cqh] relative bg-purple-500/15 text-purple-500 font-normal flex leading-[100%] items-center justify-center min-h-0 min-w-0 overflow-hidden [container-type:size] text-[clamp(12px,min(3.5cqw,10cqh),48px)]"
+        class="@container px-[1cqw] py-[1.5cqh] relative [--bg-color:color-mix(in_srgb,var(--color-purple-500)_15%,black)] bg-[var(--bg-color)] text-purple-500 font-normal flex leading-[100%] items-center justify-center min-h-0 min-w-0 overflow-hidden [container-type:size] text-[clamp(12px,min(3.5cqw,10cqh),48px)]"
       >
         <Quotable client:load />
       </div>
