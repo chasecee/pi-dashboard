@@ -8,7 +8,6 @@
         "@astrojs/check": "^0.9.9",
         "@astrojs/react": "^6.0.1",
         "@astrojs/vercel": "^11.0.3",
-        "@upstash/redis": "^1.38.0",
         "astro": "^7.0.9",
         "react": "^19.2.7",
         "react-dom": "^19.2.7",

@@ -27,12 +27,12 @@ export default function ConnectionStatus() {
 
   return (
     <div
-      className={`flex rounded-[0.4cqw] ring-[0px] flex-row items-center text-[clamp(12px,2.5cqw,18px)] gap-[2cqw] px-[2cqw] pr-[2.5cqw] py-[1cqh] ring-current/50 font-normal shrink-0 ${
+      className={`flex rounded-[0.4cqw] ring-[0px] flex-row items-center text-[clamp(12px,2.5cqw,18px)] gap-[1cqw] p-[5cqh] ring-current/50 font-normal shrink-0 ${
         isOnline ? "text-green-700" : "text-red-700"
       }`}
     >
-      <div className="size-[clamp(10px,1.8cqw,14px)] rounded-full bg-current"></div>
-      <span className="opacity-70 leading-[1] relative top-[0.1cqh]">
+      <div className="size-[clamp(10px,1.5cqw,12px)] rounded-full bg-current"></div>
+      <span className="opacity-70 leading-[1] relative top-[0.1cqh] font-bold">
         {isOnline ? "Online" : "Offline"}
       </span>
     </div>
