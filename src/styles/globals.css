@@ -1,4 +1,5 @@
 @import "tailwindcss";
+@import "./weather-backgrounds.css";
 
 @theme inline {
   --font-anonymous: var(--font-anonymous);

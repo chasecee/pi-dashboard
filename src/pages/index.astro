@@ -6,6 +6,7 @@ import Clock from "../components/Clock";
 import DateDisplay from "../components/Date";
 import ConnectionStatus from "../components/ConnectionStatus";
 import Quotable from "../components/Quotable";
+import WeatherBackground from "../components/weather/WeatherBackground";
 ---
 
 <Layout>
@@ -14,12 +15,13 @@ import Quotable from "../components/Quotable";
       <div
         class="@container relative [--bg-color:color-mix(in_srgb,#5b9ea8_15%,black)] bg-[var(--bg-color)] text-[#7ebdc8] px-[1cqw] py-0 flex justify-center items-center flex-col min-h-0 min-w-0 overflow-hidden [container-type:size]"
       >
-        <div class="absolute top-0 left-0">
+        <WeatherBackground client:load className="absolute inset-0 z-0" />
+        <div class="absolute top-0 left-0 z-10">
           <ConnectionStatus client:load />
         </div>
-        <div class="relative w-full">
+        <div class="relative z-10 w-full">
           <div
-            class="absolute left-0 right-0 bottom-full mb-[1.5cqh] text-[clamp(16px,min(5.5cqw,14cqh),96px)]"
+            class="absolute left-0 right-0 bottom-full text-[clamp(16px,min(5.5cqw,14cqh),96px)]"
           >
             <DateDisplay client:load />
           </div>
